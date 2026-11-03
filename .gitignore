@@ -1,0 +1,26 @@
+
+# Java / Maven
+**/target/
+**/build/
+
+# Node.js / React
+**/node_modules/
+**/dist/
+**/dist-ssr/
+
+# IDE
+.idea/
+**/.idea/
+*.iml
+.vscode/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Logs and temporary files
+*.log
+.DS_Store
+Thumbs.db
+.postman/

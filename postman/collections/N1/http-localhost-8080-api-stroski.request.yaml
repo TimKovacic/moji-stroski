@@ -1,0 +1,19 @@
+$kind: http-request
+name: http://localhost:8080/api/stroski
+description: ""
+url: http://localhost:8080/api/stroski
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"opis\": \"Kosilo\",\r
+
+    \  \"znesek\": 8.90,\r
+
+    \  \"kategorija\": \"Hrana\",\r
+
+    \  \"datum\": \"2026-10-13\"\r
+
+    }"
+order: 1000
