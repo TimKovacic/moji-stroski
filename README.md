@@ -1,178 +1,322 @@
 # Moji stroški
 
+Spletna aplikacija za beleženje, pregledovanje, urejanje in analiziranje osebnih stroškov. Uporabnik lahko dodaja nove stroške, jih ureja ali briše ter analizira porabo v izbranem časovnem obdobju in po kategorijah.
+
+## Kazalo
+
+1. [O projektu](#o-projektu)
+2. [Uporabljene tehnologije](#uporabljene-tehnologije)
+3. [Struktura projekta](#struktura-projekta)
+4. [Zahteve za namestitev](#zahteve-za-namestitev)
+5. [Namestitev in zagon](#namestitev-in-zagon)
+6. [Funkcionalnosti aplikacije](#funkcionalnosti-aplikacije)
+7. [API-endpointi](#api-endpointi)
+8. [Navodila za razvijalce](#navodila-za-razvijalce)
+9. [Standardi kodiranja](#standardi-kodiranja)
+
 ## O projektu
 
-**Moji stroški** je spletna aplikacija za beleženje in pregled osebnih stroškov. Uporabniku omogoča dodajanje, pregledovanje, urejanje in brisanje stroškov ter analizo porabe glede na izbrano časovno obdobje in kategorijo.
+**Moji stroški** je spletna aplikacija, namenjena spremljanju osebnih financ. Omogoča enostavno beleženje vsakodnevnih izdatkov in pregled nad porabo.
 
-Aplikacija je sestavljena iz dveh glavnih delov:
-- **Frontend:** uporabniški vmesnik, izdelan s knjižnico React.
-- **Backend:** strežniški del, izdelan s Spring Boot, ki skrbi za obdelavo zahtev in komunikacijo s podatkovno bazo PostgreSQL.
+Vsak strošek vsebuje:
+- opis stroška,
+- znesek,
+- kategorijo,
+- datum.
+
+Aplikacija je sestavljena iz treh glavnih delov:
+- **Frontend:** uporabniški vmesnik, izdelan z ogrodjem React.
+- **Backend:** strežniški del (REST API), izdelan s Spring Boot.
+- **Podatkovna baza:** PostgreSQL, ki shranjuje podatke o stroških in teče v Docker vsebniku.
 
 ## Uporabljene tehnologije
 
-### Frontend
-- React 19.3.1 – izdelava uporabniškega vmesnika.
-- React DOM 19.3.1 – prikaz React komponent.
-- Vite 8.3.4 – razvojno okolje in orodje za gradnjo aplikacije.
-- Axios 1.20.0 – komunikacija z backend API-jem.
-- Node.js 24.11.1 in npm 11.6.2 – izvajanje in upravljanje odvisnosti.
+Navedene so verzije iz konfiguracijskih datotek `pom.xml` in `package.json`. Pri frontendu predpona `^` pomeni »ta ali novejša različica znotraj iste glavne različice«. Dejansko nameščene različice so zapisane v `package-lock.json`.
 
 ### Backend
-- Java 25 – programski jezik.
-- Spring Boot 4.1.1 – razvoj strežniškega dela aplikacije.
-- Spring Data JPA – dostop do podatkovne baze.
-- Spring Web MVC – izdelava REST API-ja.
-- Hibernate – preslikava objektov v relacijsko podatkovno bazo.
-- PostgreSQL 18 – relacijska podatkovna baza.
-- Springdoc OpenAPI 3.1.1 – dokumentacija in preizkušanje API-ja.
-- Maven Wrapper – upravljanje in gradnja projekta.
 
-### Ostala orodja
-- IntelliJ IDEA – razvojno okolje.
-- Docker Desktop in Docker Compose – zagon PostgreSQL podatkovne baze.
-- DataGrip – pregledovanje in upravljanje podatkovne baze.
-- Postman – preizkušanje API zahtev.
-- Git in GitHub – upravljanje različic izvorne kode.
+| Tehnologija | Verzija | Namen |
+|---|---|---|
+| Java | 25 | programski jezik |
+| Spring Boot | 4.1.1 | ogrodje za backend |
+| Spring Web MVC | iz Spring Boot 4.1.1 | REST API |
+| Spring Data JPA | iz Spring Boot 4.1.1 | dostop do podatkov |
+| PostgreSQL JDBC Driver | iz Spring Boot 4.1.1 | povezava s PostgreSQL |
+| Springdoc OpenAPI | 3.1.1 | Swagger UI dokumentacija API-ja |
+| H2 Database | iz Spring Boot 4.1.1 | **vključena v `pom.xml`, vendar se v aplikaciji ne uporablja** (aplikacija uporablja PostgreSQL) |
+| Maven Wrapper | priložen v projektu | gradnja in zagon brez ločene namestitve Mavena |
+
+### Frontend
+
+| Tehnologija | Verzija | Namen |
+|---|---|---|
+| React | ^19.3.1 | uporabniški vmesnik |
+| React DOM | ^19.3.1 | izris komponent |
+| Vite | ^8.3.4 | razvojni strežnik in gradnja |
+| Axios | ^1.20.0 | HTTP zahteve do backenda |
+| ESLint | ^10.13.0 | preverjanje kakovosti kode |
+| @vitejs/plugin-react | ^6.1.2 | podpora za React v Vite |
+| JavaScript, HTML, CSS | – | jeziki frontenda |
+
+### Podatkovna baza in razvojna orodja
+
+| Orodje | Verzija / opomba |
+|---|---|
+| PostgreSQL | 18 (Docker slika `postgres:18`) |
+| Docker Desktop in Docker Compose | zagon podatkovne baze |
+| DataGrip | pregled podatkovne baze (neobvezno) |
+| IntelliJ IDEA | priporočeno razvojno okolje |
+| Postman | testiranje API-ja |
+| Git in GitHub | upravljanje izvorne kode |
 
 ## Struktura projekta
 
-Projekt je razdeljen na naslednje glavne mape:
+Po kloniranju repozitorija dobimo mapo `moji-stroski/`, ki je razdeljena na štiri glavne mape:
 
 ```text
-SpringBoot/
+moji-stroski/
 ├── backend/
+│   ├── .mvn/                        # Maven Wrapper (konfiguracija)
 │   ├── src/
 │   │   ├── main/
 │   │   │   ├── java/si/student/backend/
+│   │   │   │   ├── BackendApplication.java   # zagonska točka aplikacije
+│   │   │   │   ├── Strosek.java              # entiteta (podatkovni model)
+│   │   │   │   ├── StrosekController.java    # REST kontroler
+│   │   │   │   └── StrosekRepository.java    # dostop do baze (JPA)
 │   │   │   └── resources/
-│   │   ├── test/
-│   │   └── ...
-│   ├── pom.xml
-│   ├── mvnw
-│   └── mvnw.cmd
+│   │   │       ├── static/
+│   │   │       ├── templates/
+│   │   │       └── application.properties    # konfiguracija aplikacije
+│   │   └── test/
+│   │       └── java/si/student/backend/
+│   │           └── BackendApplicationTests.java
+│   ├── mvnw                         # Maven Wrapper (Linux/macOS)
+│   ├── mvnw.cmd                     # Maven Wrapper (Windows)
+│   └── pom.xml                      # odvisnosti in gradnja backenda
+│
 ├── frontend/
-│   ├── public/
+│   ├── public/                      # statične datoteke
 │   ├── src/
-│   │   ├── assets/
+│   │   ├── assets/                  # slike in ikone
 │   │   ├── services/
-│   │   ├── App.jsx
+│   │   │   └── api.js               # Axios povezava z backendom
+│   │   ├── App.jsx                  # glavna komponenta
 │   │   ├── App.css
 │   │   ├── index.css
-│   │   └── main.jsx
-│   ├── package.json
+│   │   └── main.jsx                 # zagonska točka frontenda
+│   ├── index.html
+│   ├── eslint.config.js             # pravila ESLint
+│   ├── package.json                 # odvisnosti in skripte
+│   ├── package-lock.json
 │   └── vite.config.js
+│
 ├── database/
-│   ├── docker-compose.yml
-│   └── .env.example
+│   ├── docker-compose.yml           # zagon PostgreSQL v Dockerju
+│   └── .env.example                 # vzorec za datoteko .env
+│
 ├── postman/
 │   ├── collections/
+│   │   └── N1/                      # Postman zbirka zahtev
+│   │       ├── .resources/
+│   │       │   └── definition.yaml
+│   │       └── http-localhost-8080-api-stroski.request.yaml
 │   ├── documents/
 │   ├── environments/
 │   ├── flows/
 │   ├── globals/
+│   │   └── workspace.globals.yaml
 │   ├── mocks/
 │   └── specs/
+│
 ├── .gitignore
 └── README.md
 ```
 
-**Opis map:**
-- `backend/` – izvorna koda strežniškega dela aplikacije.
-- `frontend/` – izvorna koda uporabniškega vmesnika.
-- `database/` – konfiguracija za zagon PostgreSQL podatkovne baze z Docker Compose.
-- `postman/` – zbirke in konfiguracije za preizkušanje API-ja.
+| Mapa | Vsebina |
+|---|---|
+| `backend` | strežniška aplikacija (Spring Boot, REST API) |
+| `frontend` | uporabniški vmesnik (React + Vite) |
+| `database` | konfiguracija podatkovne baze (Docker Compose) |
+| `postman` | zbirke in konfiguracije za testiranje API-ja |
+
+## Zahteve za namestitev
+
+Pred zagonom projekta morajo biti nameščeni:
+
+- **Java JDK 25** – za izvajanje backend aplikacije.
+- **Node.js in npm** – za izvajanje frontend aplikacije.
+- **Docker Desktop** – za zagon PostgreSQL podatkovne baze.
+- **Git** – za upravljanje izvorne kode.
+- **IntelliJ IDEA** – priporočeno razvojno okolje (neobvezno).
+- **DataGrip** – priporočeno orodje za pregledovanje podatkovne baze (neobvezno).
+
+Maven ni treba nameščati posebej, ker projekt vsebuje Maven Wrapper (`mvnw`, `mvnw.cmd`).
+
+Različice, uporabljene pri razvoju:
+- Java: 25
+- Node.js: 24.11.1
+- npm: 11.6.2
+- PostgreSQL: 18
+- Spring Boot: 4.1.1
 
 ## Namestitev in zagon
 
-### Predpogoji
-
-Za zagon projekta potrebujemo:
-- Java JDK 25 ali novejšo združljivo različico.
-- Node.js in npm.
-- Docker Desktop.
-- Git.
+Za delovanje aplikacije je treba zagnati **tri dele v tem vrstnem redu**: podatkovno bazo, backend in frontend. Vsak del teče v svojem terminalu.
 
 ### 1. Prenos projekta
 
-Projekt prenesemo iz GitHub repozitorija:
-
 ```bash
 git clone https://github.com/TimKovacic/moji-stroski.git
+cd moji-stroski
 ```
 
-Nato odpremo mapo projekta.
+Nato odpremo mapo projekta v IntelliJ IDEA ali drugem urejevalniku kode.
 
-### 2. Nastavitev in zagon podatkovne baze
+### 2. Zagon podatkovne baze
 
-V mapi `database/` se nahaja datoteka `docker-compose.yml`.
+Podatkovna baza PostgreSQL se zažene s pomočjo Docker Compose. Preden nadaljujemo, mora biti Docker Desktop zagnan.
 
-Najprej ustvarimo lokalno datoteko `.env` iz predloge `.env.example`:
+Premaknemo se v mapo `database`:
 
-V PowerShellu:
+```bash
+cd database
+```
+
+Iz vzorčne datoteke ustvarimo svojo datoteko `.env`.
+
+**Windows (PowerShell):**
 
 ```powershell
 Copy-Item .env.example .env
 ```
 
-V datoteki `.env` nastavimo lastno geslo:
+**macOS / Linux:**
 
-```env
-DB_PASSWORD=izbrano_geslo
+```bash
+cp .env.example .env
 ```
 
-Datoteka `.env` vsebuje lokalne podatke in se ne sme dodajati v Git repozitorij.
+Odpremo datoteko `database/.env` in nastavimo svoje geslo:
 
-Nato v mapi `database/` zaženemo podatkovno bazo:
+```env
+DB_PASSWORD=izbrano_varno_geslo
+```
+
+Datoteka `.env` je v `.gitignore`, zato se ne objavi na GitHubu. Gesla ne objavljamo v repozitoriju.
+
+Zaženemo podatkovno bazo:
 
 ```bash
 docker compose up -d
+```
+
+Preverimo, ali podatkovna baza deluje (stanje mora biti `running`):
+
+```bash
+docker compose ps
 ```
 
 Podatkovna baza uporablja naslednje nastavitve:
 
 | Nastavitev | Vrednost |
 |---|---|
-| Host | localhost |
-| Port | 5433 |
-| Database | stroski |
-| Username | postgres |
-| Password | Vrednost spremenljivke DB_PASSWORD |
+| Vrsta podatkovne baze | PostgreSQL |
+| Različica | 18 |
+| Ime vsebnika | `moji-stroski-db` |
+| Ime podatkovne baze | `stroski` |
+| Uporabniško ime | `postgres` |
+| Geslo | vrednost `DB_PASSWORD` iz datoteke `.env` |
+| Vrata na računalniku | 5433 |
+| Vrata v Docker vsebniku | 5432 |
 
-### 3. Zagon backenda
+Podatki se shranjujejo v Docker volume `postgres_data`, zato ostanejo ohranjeni tudi po ustavitvi vsebnika.
 
-V IntelliJ IDEA odpremo projekt v mapi `backend/`.
+**Tabela `strosek` se ustvari samodejno.** Ob prvem zagonu backenda jo ustvari Hibernate (nastavitev `spring.jpa.hibernate.ddl-auto=update`), zato SQL skripte ni treba izvajati ročno.
 
-Pred zagonom nastavimo okoljsko spremenljivko `DB_PASSWORD`, ki mora vsebovati enako geslo kot v datoteki `database/.env`.
+Za ustavitev podatkovne baze uporabimo:
 
-Backend zaženemo z zagonom razreda `BackendApplication`.
+```bash
+docker compose down
+```
 
-Lahko pa ga zaženemo tudi prek terminala v mapi `backend/`:
+**Pomembno:** Ukaza `docker compose down -v` ne uporabljamo, če želimo ohraniti podatke, ker odstrani tudi Docker volume.
+Lahko pa aplikacijo preprosto zapremo, a se v ozadju še vedno izvaja Docker daemon, zato ga lahko ustavimo preko opravilne vrstice, kjer z desnim klikom kliknemo na ikono Dockerja ter nato `Quit Docker Desktop`. Ali pa prekinemo opravilo Upravljitelju opravil.
+
+### 3. Zagon backend aplikacije
+
+Backend se nahaja v mapi `backend`. Konfiguracija je v datoteki:
+
+```text
+backend/src/main/resources/application.properties
+```
+
+Povezava s podatkovno bazo je nastavljena tako:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5433/stroski
+spring.datasource.username=postgres
+spring.datasource.password=${DB_PASSWORD}
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+```
+
+Backend potrebuje okoljsko spremenljivko `DB_PASSWORD`. Njena vrednost mora biti **enaka geslu**, ki je nastavljeno v datoteki `database/.env`.
+
+**Možnost A: zagon v IntelliJ IDEA**
+
+1. Odpremo **Run → Edit Configurations**.
+2. Pri konfiguraciji aplikacije `BackendApplication` v polje **Environment variables** vpišemo:
+
+```text
+DB_PASSWORD=izbrano_varno_geslo
+```
+
+3. Zaženemo aplikacijo `BackendApplication`.
+
+**Možnost B: zagon v terminalu**
+
+Najprej se premaknemo v mapo `backend`.
+
+*Windows (PowerShell):*
 
 ```powershell
+cd backend
+$env:DB_PASSWORD="izbrano_varno_geslo"
 .\mvnw.cmd spring-boot:run
 ```
 
-Backend se zažene na naslovu:
+*macOS / Linux:*
 
-`http://localhost:8080`
+```bash
+cd backend
+export DB_PASSWORD="izbrano_varno_geslo"
+./mvnw spring-boot:run
+```
 
-API je dostopen na naslovu:
+Namesto `izbrano_varno_geslo` uporabimo dejansko geslo iz datoteke `.env`.
 
-`http://localhost:8080/api/stroski`
+Če je zagon uspešen, backend posluša na naslovu:
 
-Dokumentacija API-ja Swagger UI:
+```text
+http://localhost:8080
+```
 
-`http://localhost:8080/swagger-ui/index.html`
+Dokumentacija API-ja (Swagger UI) je dostopna na:
 
-### 4. Zagon frontenda
+```text
+http://localhost:8080/swagger-ui/index.html
+```
 
-V terminalu odpremo mapo `frontend/`:
+### 4. Zagon frontend aplikacije
+
+Frontend se nahaja v mapi `frontend`. Odpremo nov terminal in se premaknemo vanjo:
 
 ```bash
 cd frontend
 ```
 
-Namestimo odvisnosti:
+Namestimo potrebne odvisnosti (samo ob prvem zagonu ali po spremembi `package.json`):
 
 ```bash
 npm install
@@ -184,81 +328,190 @@ Zaženemo razvojni strežnik:
 npm run dev
 ```
 
-Frontend je nato dostopen na naslovu:
+Po uspešnem zagonu je aplikacija dostopna na naslovu:
 
-`http://localhost:5173`
+```text
+http://localhost:5173
+```
 
-Za pravilno delovanje aplikacije morajo biti zagnani Docker vsebnik s PostgreSQL podatkovno bazo, backend in frontend.
+Frontend za komunikacijo z backendom uporablja Axios. Povezava je nastavljena v datoteki `frontend/src/services/api.js`:
+
+```javascript
+import axios from 'axios'
+
+const api = axios.create({
+    baseURL: 'http://localhost:8080/api/stroski',
+})
+
+export default api
+```
+
+**Opomba o CORS:** Backend sprejema zahteve samo z naslova `http://localhost:5173` (nastavljeno v `StrosekController` z `@CrossOrigin`). Če frontend teče na drugih vratih, jih je treba tam ustrezno popraviti.
+
+**Pomembno:** Podatkovna baza, backend in frontend morajo biti hkrati zagnani, da aplikacija deluje v celoti.
+
+### Pogoste težave
+
+| Težava | Rešitev |
+|---|---|
+| Backend se ne poveže z bazo | Preverimo, ali Docker vsebnik teče (`docker compose ps`) in ali je `DB_PASSWORD` enak v `.env` in v okoljski spremenljivki backenda. |
+| Vrata 5433, 8080 ali 5173 so zasedena | Ustavimo program, ki jih uporablja, ali zamenjamo vrata v konfiguraciji. |
+| Frontend ne prikaže podatkov | Preverimo, ali backend teče na `http://localhost:8080` in ali frontend teče na vratih 5173. |
+| Po spremembi gesla v `.env` povezava ne deluje | Geslo se v bazi nastavi ob prvem zagonu. Če ga spremenimo pozneje, je treba volume izbrisati z `docker compose down -v` (izgubimo vse podatke). |
+
+## Funkcionalnosti aplikacije
+
+Aplikacija omogoča:
+
+- dodajanje novih stroškov,
+- pregled vseh shranjenih stroškov,
+- urejanje obstoječih stroškov,
+- brisanje stroškov,
+- prikaz skupnega zneska vseh stroškov,
+- prikaz števila zabeleženih stroškov,
+- analizo stroškov v izbranem časovnem obdobju,
+- filtriranje analize po kategoriji,
+- prikaz skupne porabe za izbrano obdobje.
+
+Pri vnosu stroška uporabnik določi opis, znesek, kategorijo in datum.
+
+Na voljo so naslednje kategorije:
+- Hrana
+- Prevoz
+- Stanovanje
+- Prosti čas
+- Zdravje
+- Drugo
+
+Zneski so prikazani v evrih (EUR).
+
+## API-endpointi
+
+Backend omogoča REST API za upravljanje stroškov.
+
+Osnovni naslov API-ja:
+
+```text
+http://localhost:8080/api/stroski
+```
+
+| HTTP metoda | Endpoint | Opis |
+|---|---|---|
+| GET | `/api/stroski` | Pridobi vse stroške. |
+| GET | `/api/stroski/{id}` | Pridobi strošek z izbranim ID-jem. Če ne obstaja, vrne 404. |
+| POST | `/api/stroski` | Ustvari nov strošek. ID se določi samodejno. |
+| PUT | `/api/stroski/{id}` | Posodobi obstoječi strošek. Če ne obstaja, vrne 404. |
+| DELETE | `/api/stroski/{id}` | Izbriše strošek. Če ne obstaja, vrne 404. |
+| GET | `/api/stroski/analiza` | Izvede analizo stroškov za izbrano obdobje. |
+
+### Primer JSON podatkov za dodajanje stroška
+
+```json
+{
+  "opis": "Kosilo",
+  "znesek": 8.90,
+  "kategorija": "Hrana",
+  "datum": "2026-11-03"
+}
+```
+
+### Analiza stroškov
+
+```text
+GET /api/stroski/analiza?od=2026-11-01&do=2026-11-30&kategorija=Hrana
+```
+
+| Parameter | Obvezen | Opis |
+|---|---|---|
+| `od` | da | začetni datum v obliki `YYYY-MM-DD` |
+| `do` | da | končni datum v obliki `YYYY-MM-DD` |
+| `kategorija` | ne | kategorija stroška; če ni podana, je prazna ali je `Vse kategorije`, se analiza izvede brez filtriranja po kategoriji |
+
+Odgovor vsebuje seznam stroškov v obdobju in njihovo vsoto:
+
+```json
+{
+  "stroski": [ { "id": 1, "opis": "Kosilo", "znesek": 8.90, "kategorija": "Hrana", "datum": "2026-11-03" } ],
+  "skupaj": 8.90
+}
+```
+
+Če je začetni datum (`od`) za končnim (`do`), API vrne napako 400 z opisom »Začetni datum ne sme biti za končnim datumom«.
+
+Za pregled in testiranje API-ja lahko uporabimo Swagger UI ali Postman (zbirka je v mapi `postman/`).
 
 ## Navodila za razvijalce
 
-Projekt uporablja Git in GitHub za upravljanje izvorne kode.
+Projekt uporablja Git in GitHub za upravljanje izvorne kode ter sodelovanje med razvijalci.
+
+GitHub repozitorij: https://github.com/TimKovacic/moji-stroski
 
 ### Osnovni potek dela
 
-1. Prenesemo repozitorij:
+Delamo neposredno na veji `main`.
+
+1. Prenesemo najnovejšo različico projekta:
 
 ```bash
-git clone https://github.com/TimKovacic/moji-stroski.git
+git checkout main
+git pull origin main
 ```
 
-2. Pred začetkom dela ustvarimo novo vejo:
-
-```bash
-git checkout -b feature/opis-spremembe
-```
-
-3. Po opravljenih spremembah preverimo stanje:
+2. Preverimo spremembe:
 
 ```bash
 git status
 ```
 
-4. Dodamo spremembe:
+3. Dodamo spremembe:
 
 ```bash
 git add .
 ```
 
-5. Ustvarimo commit z opisnim sporočilom:
+4. Ustvarimo commit z opisnim sporočilom:
 
 ```bash
-git commit -m "Opis spremembe"
+git commit -m "Opis sprememb"
 ```
 
-6. Pošljemo vejo na GitHub:
+5. Pošljemo spremembe na GitHub:
 
 ```bash
-git push -u origin feature/opis-spremembe
+git push origin main
 ```
 
-7. Na GitHubu ustvarimo Pull Request za združitev sprememb v vejo `main`.
+Pred pošiljanjem preverimo, ali aplikacija deluje pravilno. Če je `git push` zavrnjen, ker je na GitHubu novejša različica, najprej ponovimo `git pull origin main`, po potrebi rešimo konflikte in nato znova zaženemo `git push origin main`.
+
+### Pomembno pri sodelovanju
+
+- Vsak razvijalec mora imeti na svojem računalniku nameščene potrebne tehnologije in svojo lokalno podatkovno bazo.
+- Datoteka `database/.env` vsebuje geslo za podatkovno bazo in se ne sme dodajati v Git. V repozitoriju je shranjena samo vzorčna datoteka `.env.example`.
+- Veje poimenujemo opisno, na primer `dodaj-filter-kategorij` ali `popravi-izracun-vsote`.
+- Neposredno v vejo `main` ne pišemo, spremembe vanjo vnašamo prek Pull Requestov.
 
 ## Standardi kodiranja
 
 Pri razvoju projekta upoštevamo naslednje standarde:
 
 ### Java
-- Imena razredov zapisujemo v obliki `UpperCamelCase`.
-- Imena metod in spremenljivk zapisujemo v obliki `lowerCamelCase`.
-- Imena paketov zapisujemo z malimi črkami.
 - Uporabljamo opisna imena razredov, metod in spremenljivk.
-- Kodo razdelimo v smiselne razrede in metode.
+- Imena razredov zapisujemo v PascalCase, na primer `StrosekController`.
+- Imena metod in spremenljivk zapisujemo v camelCase.
+- Razrede in metode organiziramo pregledno.
+- Uporabljamo ustrezne podatkovne tipe, na primer `BigDecimal` za denarne zneske in `LocalDate` za datume.
+- Kodo razdelimo na ustrezne razrede glede na njihovo odgovornost (entiteta, repozitorij, kontroler).
 
 ### JavaScript in React
-- Komponente React poimenujemo z uporabo `PascalCase`.
-- Funkcije in spremenljivke poimenujemo z uporabo `camelCase`.
-- API-klice hranimo v mapi `src/services/`.
-- Uporabljamo dosledno zamikanje kode.
-- Pred oddajo sprememb preverimo kodo z ukazom:
-
-```bash
-npm run lint
-```
+- Uporabljamo funkcijske React komponente.
+- Imena React komponent zapisujemo v PascalCase.
+- Imena spremenljivk in funkcij zapisujemo v camelCase.
+- Za komunikacijo z backendom uporabljamo Axios prek datoteke `services/api.js`.
+- Uporabljamo dosledno oblikovanje kode in preverjanje z ESLint (`npm run lint`).
 
 ### Splošna pravila
-- Spremembe opisujemo z jasnimi in razumljivimi commit sporočili.
-- Gesel in drugih občutljivih podatkov ne shranjujemo v Git repozitorij.
-- Lokalna konfiguracija se hrani v datoteki `.env`.
-- Za konfiguracijo okolja je v repozitoriju na voljo predloga `.env.example`.
-- Pred združitvijo sprememb preverimo pravilnost delovanja aplikacije.
+- Koda mora biti berljiva in razumljiva.
+- Imena datotek, razredov, metod in spremenljivk naj bodo smiselna.
+- Spremembe naj bodo razdeljene v manjše, opisne commite.
+- Gesel, ključev in drugih občutljivih podatkov ne objavljamo v GitHub repozitoriju.
+- Pred oddajo sprememb preverimo delovanje aplikacije.

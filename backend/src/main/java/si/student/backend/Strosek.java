@@ -16,7 +16,7 @@ public class Strosek {
 
     private String opis;
     private BigDecimal znesek;
-    private String kategorija; //za kaj smo imeli ta stroseek (npr. hrana, gorivo)
+    private String kategorija; //za kaj smo imeli ta strosek (npr. hrana, gorivo)
     private LocalDate datum;
 
     public Strosek() {
