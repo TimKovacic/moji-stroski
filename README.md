@@ -487,8 +487,7 @@ Pred pošiljanjem preverimo, ali aplikacija deluje pravilno. Če je `git push` z
 
 - Vsak razvijalec mora imeti na svojem računalniku nameščene potrebne tehnologije in svojo lokalno podatkovno bazo.
 - Datoteka `database/.env` vsebuje geslo za podatkovno bazo in se ne sme dodajati v Git. V repozitoriju je shranjena samo vzorčna datoteka `.env.example`.
-- Veje poimenujemo opisno, na primer `dodaj-filter-kategorij` ali `popravi-izracun-vsote`.
-- Neposredno v vejo `main` ne pišemo, spremembe vanjo vnašamo prek Pull Requestov.
+- Nove vnose poimenujemo opisno, na primer `dodaj-filter-kategorij` ali `popravi-izracun-vsote`.
 
 ## Standardi kodiranja
 
