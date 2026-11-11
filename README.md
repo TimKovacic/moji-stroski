@@ -2,17 +2,34 @@
 
 Spletna aplikacija za beleženje, pregledovanje, urejanje in analiziranje osebnih stroškov. Uporabnik lahko dodaja nove stroške, jih ureja ali briše ter analizira porabo v izbranem časovnem obdobju in po kategorijah.
 
+
+
 ## Kazalo
 
-1. [O projektu](#o-projektu)
-2. [Uporabljene tehnologije](#uporabljene-tehnologije)
-3. [Struktura projekta](#struktura-projekta)
-4. [Zahteve za namestitev](#zahteve-za-namestitev)
-5. [Namestitev in zagon](#namestitev-in-zagon)
-6. [Funkcionalnosti aplikacije](#funkcionalnosti-aplikacije)
-7. [API-endpointi](#api-endpointi)
-8. [Navodila za razvijalce](#navodila-za-razvijalce)
-9. [Standardi kodiranja](#standardi-kodiranja)
+1.  [Sodelujoči](#sodelujoči)
+2.  [O projektu](#o-projektu)
+3.  [Vizija projekta](#vizija-projekta)
+    -   [Opis rešitve](#opis-rešitve)
+    -   [Ključne funkcionalnosti](#ključne-funkcionalnosti)
+    -   [Obseg rešitve in morebitne
+        omejitve](#obseg-rešitve-in-morebitne-omejitve)
+4.  [Uporabljene tehnologije](#uporabljene-tehnologije)
+5.  [Struktura projekta](#struktura-projekta)
+6.  [Zahteve za namestitev](#zahteve-za-namestitev)
+7.  [Namestitev in zagon](#namestitev-in-zagon)
+8.  [Funkcionalnosti aplikacije](#funkcionalnosti-aplikacije)
+9.  [API-endpointi](#api-endpointi)
+10. [Navodila za razvijalce](#navodila-za-razvijalce)
+11. [Standardi kodiranja](#standardi-kodiranja)
+
+
+
+## Sodelujoči
+
+Imena članov skupine:
+- Luka Poprask
+- Tim Kovačič
+- Klemnen Kovač
 
 ## O projektu
 
@@ -28,6 +45,43 @@ Aplikacija je sestavljena iz treh glavnih delov:
 - **Frontend:** uporabniški vmesnik, izdelan z ogrodjem React.
 - **Backend:** strežniški del (REST API), izdelan s Spring Boot.
 - **Podatkovna baza:** PostgreSQL, ki shranjuje podatke o stroških in teče v Docker vsebniku.
+
+
+## Vizija projekta
+
+Vizija projekta **Moji stroški** je razviti preprosto in pregledno spletno aplikacijo, ki uporabnikom omogoča učinkovito spremljanje osebnih stroškov. Namen aplikacije je uporabnikom olajšati beleženje stroškov, omogočiti boljši pregled nad porabo denarja ter jim pomagati pri razumevanju njihovih potrošniških navad.
+
+Aplikacija je namenjena posameznikom, ki želijo na enem mestu spremljati svoje vsakodnevne stroške, da bi tako dobili boljši nadzor nad porabo lastnih financ. Le te lahko razvrščajo po kategorijah in analizirajo porabo v izbranem časovnem obdobju.
+
+### Opis rešitve
+
+Rešitev predstavlja spletna aplikacija, sestavljena iz uporabniškega vmesnika, strežniškega dela in podatkovne baze. Uporabnik prek uporabniškega vmesnika upravlja svoje stroške, backend obdeluje zahtevke in skrbi za komunikacijo s podatkovno bazo, v kateri se podatki trajno shranjujejo.
+
+Vsak zabeležen strošek vsebuje opis, znesek, kategorijo in datum. Na podlagi shranjenih podatkov lahko uporabnik spremlja skupno porabo ter izvede analizo stroškov za izbrano časovno obdobje in kategorijo.
+
+#### Ključne funkcionalnosti
+
+Aplikacija vključuje naslednje ključne funkcionalnosti:
+
+- **Dodajanje stroškov:** uporabnik lahko vnese nov strošek z opisom, zneskom, kategorijo in datumom.
+- **Pregled stroškov:** prikaz vseh zabeleženih stroškov na enem mestu.
+- **Urejanje stroškov:** uporabnik lahko spremeni podatke že obstoječega stroška.
+- **Brisanje stroškov:** uporabnik lahko odstrani stroške, ki jih ne želi več hraniti.
+- **Pregled porabe:** prikaz skupnega zneska vseh stroškov in števila zabeleženih stroškov.
+- **Analiza stroškov:** izračun skupne porabe v izbranem časovnem obdobju.
+- **Filtriranje po kategorijah:** možnost omejitve analize na izbrano kategorijo stroškov.
+
+#### Obseg rešitve in morebitne omejitve
+
+Projekt zajema razvoj osnovne spletne aplikacije za osebno spremljanje stroškov. Vključuje uporabniški vmesnik, REST API za upravljanje podatkov ter PostgreSQL podatkovno bazo za njihovo shranjevanje.
+
+Aplikacija trenutno omogoča:
+- upravljanje posameznih stroškov,
+- razvrščanje stroškov v vnaprej določene kategorije,
+- pregled skupne porabe,
+- analizo porabe glede na časovno obdobje in kategorijo.
+
+Cilj prihodnjih nadgradenj bi bil razširiti funkcionalnosti aplikacije in uporabnikom ponuditi še boljši pregled nad njihovimi osebnimi financami.
 
 ## Uporabljene tehnologije
 
@@ -76,59 +130,53 @@ Po kloniranju repozitorija dobimo mapo `moji-stroski/`, ki je razdeljena na šti
 ```text
 moji-stroski/
 ├── backend/
-│   ├── .mvn/                        # Maven Wrapper (konfiguracija)
+│   ├── .mvn/
 │   ├── src/
 │   │   ├── main/
 │   │   │   ├── java/si/student/backend/
-│   │   │   │   ├── BackendApplication.java   # zagonska točka aplikacije
-│   │   │   │   ├── Strosek.java              # entiteta (podatkovni model)
-│   │   │   │   ├── StrosekController.java    # REST kontroler
-│   │   │   │   └── StrosekRepository.java    # dostop do baze (JPA)
+│   │   │   │   ├── controller/
+│   │   │   │   │   └── StrosekController.java
+│   │   │   │   ├── repository/
+│   │   │   │   │   └── StrosekRepository.java
+│   │   │   │   ├── services/
+│   │   │   │   │   └── Strosek.java
+│   │   │   │   └── BackendApplication.java
 │   │   │   └── resources/
 │   │   │       ├── static/
 │   │   │       ├── templates/
-│   │   │       └── application.properties    # konfiguracija aplikacije
+│   │   │       └── application.properties
 │   │   └── test/
 │   │       └── java/si/student/backend/
 │   │           └── BackendApplicationTests.java
-│   ├── mvnw                         # Maven Wrapper (Linux/macOS)
-│   ├── mvnw.cmd                     # Maven Wrapper (Windows)
-│   └── pom.xml                      # odvisnosti in gradnja backenda
-│
+│   ├── mvnw
+│   ├── mvnw.cmd
+│   └── pom.xml
 ├── frontend/
-│   ├── public/                      # statične datoteke
+│   ├── public/
 │   ├── src/
-│   │   ├── assets/                  # slike in ikone
+│   │   ├── assets/
 │   │   ├── services/
-│   │   │   └── api.js               # Axios povezava z backendom
-│   │   ├── App.jsx                  # glavna komponenta
+│   │   │   └── api.js
+│   │   ├── App.jsx
 │   │   ├── App.css
 │   │   ├── index.css
-│   │   └── main.jsx                 # zagonska točka frontenda
+│   │   └── main.jsx
 │   ├── index.html
-│   ├── eslint.config.js             # pravila ESLint
-│   ├── package.json                 # odvisnosti in skripte
+│   ├── eslint.config.js
+│   ├── package.json
 │   ├── package-lock.json
 │   └── vite.config.js
-│
 ├── database/
-│   ├── docker-compose.yml           # zagon PostgreSQL v Dockerju
-│   └── .env.example                 # vzorec za datoteko .env
-│
+│   ├── docker-compose.yml
+│   └── .env.example
 ├── postman/
 │   ├── collections/
-│   │   └── N1/                      # Postman zbirka zahtev
-│   │       ├── .resources/
-│   │       │   └── definition.yaml
-│   │       └── http-localhost-8080-api-stroski.request.yaml
 │   ├── documents/
 │   ├── environments/
 │   ├── flows/
 │   ├── globals/
-│   │   └── workspace.globals.yaml
 │   ├── mocks/
 │   └── specs/
-│
 ├── .gitignore
 └── README.md
 ```

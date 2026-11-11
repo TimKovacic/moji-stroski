@@ -1,4 +1,4 @@
-package si.student.backend;
+package si.student.backend.controller;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import si.student.backend.repository.StrosekRepository;
+import si.student.backend.services.Strosek;
 
 import java.util.List;
 

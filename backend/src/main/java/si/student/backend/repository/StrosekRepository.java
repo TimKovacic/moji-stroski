@@ -1,8 +1,9 @@
-package si.student.backend;
+package si.student.backend.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.time.LocalDate;
 import java.util.List;
+import si.student.backend.services.Strosek;
 
 public interface StrosekRepository extends JpaRepository<Strosek, Long> {
 

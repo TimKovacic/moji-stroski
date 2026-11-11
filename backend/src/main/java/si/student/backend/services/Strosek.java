@@ -1,4 +1,4 @@
-package si.student.backend;
+package si.student.backend.services;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
