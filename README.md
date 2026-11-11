@@ -21,7 +21,7 @@ Spletna aplikacija za beleženje, pregledovanje, urejanje in analiziranje osebni
 9.  [API-endpointi](#api-endpointi)
 10. [Navodila za razvijalce](#navodila-za-razvijalce)
 11. [Standardi kodiranja](#standardi-kodiranja)
-
+12. [Besednjak](#besednjak)
 
 
 ## Sodelujoči
@@ -562,3 +562,15 @@ Pri razvoju projekta upoštevamo naslednje standarde:
 - Spremembe naj bodo razdeljene v manjše, opisne commite.
 - Gesel, ključev in drugih občutljivih podatkov ne objavljamo v GitHub repozitoriju.
 - Pred oddajo sprememb preverimo delovanje aplikacije.
+
+## Besednjak
+| Pojem | Razlaga | Primer uporabe |
+| :--- | :--- | :--- |
+| Osebni strošek | Primarni uporabljeni objekt. Predstavlja porabo denarja uporabnika v realnem svetu. | 5€ za kavo je osebni strošek. |
+| Uporabnik | Oseba, kateri je aplikacija namaenjena in jo tudi uporablja. | Uporabnik lahko spremlja svoje stroške. |
+| Izdatek | Strošek, denar, ki je bil porabljen. | Izdatek za račun je znašal 22,50€ |
+| Časovno obdobje | Opcija med filtri prikazanih stroškov, ki omejuje prikaz glede na izbrana datuma. | Časovno obdobje: med 1. 11. 2026 in 30. 11. 2026 |
+| Kategorija stroška | Atribut stroška, ki opisuje za kakšno vrsto stroška gre. | Hrana, Prevoz, Stanovanje, Prosti čas, Zdravje, Drugo |
+| Datum | Časovni okvir, natančen na dan. | `1. 11. 2026` pomeni prvi november leta 2026 |
+| Filter | Orodje za omejevanje izpisov na spletni aplikaciji. | Filter lahko omeji stroške po datumu ali kategoriji. |
+| Skupna poraba | Skupni seštevek izdatkov v določenem časovnem obdobju ali po drugih filtrih | Skupna poraba za mesec oktober je: `546,22€` |
