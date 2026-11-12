@@ -151,6 +151,8 @@ moji-stroski/
 │   ├── mvnw
 │   ├── mvnw.cmd
 │   └── pom.xml
+├── DPU/
+│   └──DPU.png
 ├── frontend/
 │   ├── public/
 │   ├── src/
@@ -574,3 +576,8 @@ Pri razvoju projekta upoštevamo naslednje standarde:
 | Datum | Časovni okvir, natančen na dan. | `1. 11. 2026` pomeni prvi november leta 2026 |
 | Filter | Orodje za omejevanje izpisov na spletni aplikaciji. | Filter lahko omeji stroške po datumu ali kategoriji. |
 | Skupna poraba | Skupni seštevek izdatkov v določenem časovnem obdobju ali po drugih filtrih | Skupna poraba za mesec oktober je: `546,22€` |
+
+## Diagram primerov uporabe
+![Diagram primerov uporabe](DPU/DPU.png)
+
+## Podroben opis primerov uporabe
