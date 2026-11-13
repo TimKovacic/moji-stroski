@@ -580,4 +580,98 @@ Pri razvoju projekta upoštevamo naslednje standarde:
 ## Diagram primerov uporabe
 ![Diagram primerov uporabe](DPU/DPU.png)
 
-## Podroben opis primerov uporabe
+# Podrobni opisi neimplementiranih primerov uporabe
+
+V tem dokumentu so podrobno opisani primeri uporabe, ki v trenutni različici aplikacije Moji stroški še niso implementirani, so pa predvideni v prihodnji, načrtovani različici.
+
+---
+
+## Primer uporabe: Iskanje stroškov
+
+**ID:** PU-07
+
+**Cilj:** Uporabnik želi hitro najti določen strošek ali skupino stroškov glede na ime stroška, ne da bi ročno pregledoval celoten seznam.
+
+**Akterji:** Uporabnik
+
+**Predpogoji:** 
+- Uporabnik je v aplikaciji in ima dostop do pregleda stroškov.
+- V sistemu obstaja vsaj en zabeležen strošek (sicer iskanje vrne prazen rezultat).
+
+**Stanje sistema po PU:** Stanje sistema se ne spremeni. Iskanje je le poizvedba in ne spreminja podatkov v bazi.
+
+**Scenarij:**
+1. Uporabnik odpre pregled stroškov.
+2. Uporabnik posreduje iskalni niz (del opisa stroška).
+3. Sistem preveri, ali je iskalni niz neprazen.
+4. Sistem poišče vse stroške, katerih opis vsebuje iskalni niz.
+5. Sistem uporabniku prikaže seznam najdenih stroškov z ustreznimi podatki (opis, znesek, kategorija, datum).
+
+**Alternativni tokovi:**
+- **2a. Uporabnik med tipkanjem spreminja iskalni niz:** Sistem sproti posodablja rezultate (iskanje v živo).
+- **3a. Iskalni niz je prazen:** Sistem prikaže celoten seznam stroškov (brez filtriranja).
+- **4a. Noben strošek ne ustreza iskalnemu nizu:** Sistem prikaže obvestilo, da ni najdenih stroškov, in uporabniku omogoči nov poskus iskanja.
+
+**Izjeme:**
+- **Napaka pri pridobivanju podatkov:** Če sistem ne more dostopati do baze podatkov, uporabniku prikaže sporočilo "Iskanje trenutno ni mogoče. Poskusite znova pozneje." in ne prikaže nepopolnega seznama.
+
+---
+
+## Primer uporabe: Nastavi proračun po kategoriji
+
+**ID:**
+
+**Cilj:** 
+
+**Akterji:** 
+
+**Predpogoji:**
+
+**Stanje sistema po PU:** 
+
+**Scenarij:**
+
+**Alternativni tokovi:**
+
+**Izjeme:**
+
+---
+
+## Primer uporabe: Izvozi poročilo o stroških
+
+**ID:**
+
+**Cilj:** 
+
+**Akterji:** 
+
+**Predpogoji:**
+
+**Stanje sistema po PU:** 
+
+**Scenarij:**
+
+**Alternativni tokovi:**
+
+**Izjeme:**
+
+---
+
+## Primer uporabe: Daj nasvet uporabniku
+
+**ID:**
+
+**Cilj:** 
+
+**Akterji:** 
+
+**Predpogoji:**
+
+**Stanje sistema po PU:** 
+
+**Scenarij:**
+
+**Alternativni tokovi:**
+
+**Izjeme:**
+
