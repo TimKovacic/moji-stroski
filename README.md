@@ -619,22 +619,39 @@ V tem dokumentu so podrobno opisani primeri uporabe, ki v trenutni različici ap
 
 ## Primer uporabe: Nastavi proračun po kategoriji
 
-**ID:**
+**ID:** PU-06
 
-**Cilj:** 
+**Cilj:** Uporabnik želi za izbrano kategorijo stroškov določiti najvišji dovoljeni znesek porabe. S tem želi spremljati porabo v posamezni kategoriji in preprečiti, da bi presegel načrtovani proračun.
 
-**Akterji:** 
+**Akterji:** Uporabnik
 
-**Predpogoji:**
+**Predpogoji:** 
+- Uporabnik je v aplikaciji in ima dostop do pregleda stroškov.
+- V aplikaciji so na voljo kategorije stroškov.
+- Uporabnik pozna znesek proračuna, ki ga želi določiti za izbrano kategorijo.
 
-**Stanje sistema po PU:** 
+**Stanje sistema po PU:**  Stanje sistema se spremeni, saj sistem shrani nov proračun za izbrano kategorijo oziroma posodobi že obstoječi proračun. Podatek o proračunu je nato na voljo za nadaljnje spremljanje porabe.
 
-**Scenarij:**
+**Scenarij:** 
+- Uporabnik odpre funkcionalnost za nastavljanje proračuna po kategorijah.
+- Sistem uporabniku prikaže seznam razpoložljivih kategorij stroškov.
+- Uporabnik izbere kategorijo, za katero želi določiti proračun.
+- Uporabnik vnese najvišji dovoljeni znesek porabe za izbrano kategorijo.
+- Uporabnik potrdi vnos proračuna.
+- Sistem preveri pravilnost vnesenih podatkov.
+- Sistem shrani proračun za izbrano kategorijo.
+- Sistem uporabniku prikaže obvestilo o uspešno nastavljenem proračunu.
 
 **Alternativni tokovi:**
+- **2a. Sistem ne prikaže nobene razpoložljive kategorije:** Sistem uporabnika obvesti, da trenutno ni na voljo kategorij, za katere bi lahko nastavil proračun.
+- **3a. Uporabnik izbere kategorijo, za katero proračun že obstaja:** Sistem prikaže trenutno nastavljen proračun in uporabniku omogoči njegovo spremembo.
+- **4a. Uporabnik vnese neveljaven znesek:** Sistem ga opozori na nepravilen vnos in zahteva ponovni vnos.
+- **5a. Uporabnik prekliče nastavitev proračuna:** Sistem prekine postopek in ne shrani sprememb.
+- **6a. Proračun za izbrano kategorijo je že nastavljen:** Sistem posodobi obstoječi proračun z novo vnesenim zneskom.
 
 **Izjeme:**
-
+- **Napaka pri shranjevanju podatkov:** Če sistem zaradi težav s podatkovno bazo ne more shraniti proračuna, uporabniku prikaže sporočilo »Proračuna trenutno ni mogoče shraniti. Poskusite znova pozneje.« Obstoječi podatki ostanejo nespremenjeni.
+- **Neveljaven znesek proračuna:** Če uporabnik vnese znesek, ki ni število ali je enak oziroma manjši od nič, sistem zavrne vnos in uporabniku prikaže ustrezno opozorilo.
 ---
 
 ## Primer uporabe: Izvozi poročilo o stroških
