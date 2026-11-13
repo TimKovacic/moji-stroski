@@ -586,9 +586,9 @@ V tem dokumentu so podrobno opisani primeri uporabe, ki v trenutni različici ap
 
 ---
 
-## Primer uporabe: Iskanje stroškov
+## Primer uporabe: Iskanje stroškov Po Nazivu
 
-**ID:** PU-07
+**ID:** PU-05
 
 **Cilj:** Uporabnik želi hitro najti določen strošek ali skupino stroškov glede na ime stroška, ne da bi ročno pregledoval celoten seznam.
 
