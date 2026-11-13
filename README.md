@@ -659,39 +659,63 @@ V tem dokumentu so podrobno opisani primeri uporabe, ki v trenutni različici ap
 
 ## Primer uporabe: Izvozi poročilo o stroških
 
-**ID:**
+**ID:** PU-07
 
-**Cilj:** 
+**Cilj:** Uporabnik dobi dokument, ki opisuje njegovo zgodovino stroškov - t.i. poročilo.
 
-**Akterji:** 
+**Akterji:** Uporabnik, sistem
 
 **Predpogoji:**
+- Uporabnik je prijavljen
+- Uporabnik ima vsaj en strošek shranjen v sistem
 
-**Stanje sistema po PU:** 
+**Stanje sistema po PU:** Sistem se ne spremeni. PU naredi izhodno datoteko, ki ne vpliva na sistem sam.
 
-**Scenarij:**
+**Scenarij:** 
+1. Uporabnik izbere opcijo za izvoz poročila
+2. Uporabnik izbere obdobje in vrste stroškov. 
+3. Sistem naloži datoteko na uporabnikovo napravo.
 
-**Alternativni tokovi:**
+**Alternativni tokovi:** 
+- **1a. Uporabnik nima nobenih zabeleženih stroškov:** Sistem opozori uporabnika, da tega primera uporabe ne more izvesti zaradi neizpoljenih predpogojev, v tem primeru, ker uporabnik nima še zabeleženih stroškov v aplikaciji.
+- **2a. Uporabnik izbere obdobje, ki ne vsebuje podatkov o stroških:** Sistem pred nadaljevanjem opozori uporabnika, da v izbranem časovnem obdobju nima nobenih stroškov in da izbere drugačno obdobje.
+- **2b. Uporabnik izbere kategorijo, ki ne vsebuje podatkov o stroških:** Sistem pred nadaljevanjem opozori uporabnika, da v izbrani kategoriji nima nobenih stroškov in da izbere drugačno kategorijo.
+- **3a. Poročilo ne doseže uporabnikove naprave:** Sistem sporoči, da naprava/brskalnik ne dopušča/omogoča prenosa datotek iz aplikacije.
 
 **Izjeme:**
+**Napaka pri pridobivanju podatkov:** Sistem ne more dostopiti do baze podatkov. Sistem naj ustavi ustvarjanje datoteke in obvesti uporabnika, da je bilo ustvarjanje neuspešno + razlog.
+**Napaka pri nalaganju datoteke na napravo:** Sistem ob neuspešnem hranjenju datoteke poskusi še enkrat in sporoči napako uporabniku.
 
 ---
 
 ## Primer uporabe: Daj nasvet uporabniku
 
-**ID:**
+**ID:** PU-08
 
-**Cilj:** 
+**Cilj:** Finančni svetovalec po pregledu stroškov uporabnika uporabniku napiše nasvet, ki ga lahko uporabnik vidi na svoji strani. Nasvetov je lahko več na enkrat.
 
-**Akterji:** 
+**Akterji:** Finančni svetovalec, uporabnik
 
 **Predpogoji:**
+- Uporabnik je prijavljen v aplikacijo
+- Uporabnik ima vsaj en strošek zabeležen
+- Finančni svetovalec je prijavljen v aplikacijo
+- Finančni svetovalec ima med strankami dodanega uporabnika
 
-**Stanje sistema po PU:** 
+**Stanje sistema po PU:** Uporabniku se bo na nadzorni plošči pojavil oddelek "nasveti", kjer so zbrani nasveti njegovega finančnega svetovalca.
 
-**Scenarij:**
+**Scenarij:** 
+1. Finančni svetovalec izbere stranko - uporabnika
+2. V pregledu stroškov uporabnika izbere možnost za dodajanje nasveta
+3. V obrazcu finančni svetovalec napiše nasvet
+4. V obrazcu izbere pomembnost nasveta
+5. Finančni svetovalec potrdi nasvet
+6. Uporabnik vidi nasvet na svoji strani
 
 **Alternativni tokovi:**
+- **1a. Uporabnik ne obstaja več:** Sistem uporabnika izbriše iz seznama strank finančnega svetovalca in pošlje sporočilo, da uporabnik ne obstaja več.
+- **3a. Nasvet je prazen:** Sistem opomne finančnega svetovalca, da je polje obvezno za izpolnitev in prepreči nadaljevanje.
 
 **Izjeme:**
-
+**Napaka pri izbiri uporabnika** Poizvedba uporabnikovih podatkov je neuspešna.
+**Napaka pri shranjevanju nasveta v bazo:** Ustvarjen nasvet se ne shrani v bazo podatkov in posledično tudi ne prikaže na uporabnikovi strani.
