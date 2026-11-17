@@ -22,7 +22,10 @@ Spletna aplikacija za beleženje, pregledovanje, urejanje in analiziranje osebni
 10. [Navodila za razvijalce](#navodila-za-razvijalce)
 11. [Standardi kodiranja](#standardi-kodiranja)
 12. [Besednjak](#besednjak)
+13. [Diagram primerov uporabe](#diagram-primerov-uporabe)
+14. [Podrobni opisi neimplementiranih primerov uporabe](#podrobni-opisi-neimplementiranih-primerov-uporabe)
 
+- [Uporabniške zgodbe in kriteriji sprejemljivosti](docs/user-stories.md)
 
 ## Sodelujoči
 
