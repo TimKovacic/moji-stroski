@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'//useState Reactu pove, katere podatke mora spremljati in prikazati
 import api from './services/api'
+import { proracunApi } from './services/api'
 import './App.css'
 
 //pridobivanje danasnjega datuma
@@ -14,6 +15,13 @@ function danesnjiDatum() {
 
 function App() {
   const [stroski, setStroski] = useState([])
+  const [aktivnaStran, setAktivnaStran] = useState('stroski')
+  const [proracuni, setProracuni] = useState([])
+  const [novaKategorija, setNovaKategorija] = useState('Hrana')
+  const [noviZnesek, setNoviZnesek] = useState('')
+  const [datumZacetka, setDatumZacetka] = useState('')
+  const [datumKonca, setDatumKonca] = useState('')
+  const [urejanjeProracunaId, setUrejanjeProracunaId] = useState(null)
   const [opis, setOpis] = useState('')
   const [znesek, setZnesek] = useState('')
   const [kategorija, setKategorija] = useState('Hrana')
@@ -33,6 +41,12 @@ function App() {
     naloziStroske()
   }, [])
 
+  useEffect(() => {
+    if (aktivnaStran === 'proracuni') {
+      naloziProracune()
+    }
+  }, [aktivnaStran])
+
   async function naloziStroske() {
     try {
       const odgovor = await api.get('')
@@ -42,6 +56,105 @@ function App() {
       alert('Stroškov ni bilo mogoče naložiti. Preveri, ali backend deluje.')
     }
   }
+
+  async function naloziProracune() {
+    try {
+      const odgovor = await proracunApi.get('')
+      setProracuni(odgovor.data)
+    } catch (napaka) {
+      console.error('Napaka pri nalaganju proračunov:', napaka)
+      alert('Proračunov ni bilo mogoče naložiti. Preveri, ali backend deluje.')
+    }
+  }
+
+  function urediProracun(proracun) {
+    setUrejanjeProracunaId(proracun.id)
+    setNovaKategorija(proracun.kategorija)
+    setNoviZnesek(proracun.znesek)
+    setDatumZacetka(proracun.datumZacetka)
+    setDatumKonca(proracun.datumKonca)
+  }
+
+  function prekliciUrejanje() {
+    setUrejanjeProracunaId(null)
+    setNovaKategorija('Hrana')
+    setNoviZnesek('')
+    setDatumZacetka('')
+    setDatumKonca('')
+  }
+
+  async function izbrisiProracun(id) {
+    const potrditev = window.confirm(
+        'Ali res želiš izbrisati ta proračun? Zgodovina stroškov bo ostala ohranjena.'
+    )
+
+    if (!potrditev) {
+      return
+    }
+
+    try {
+      await proracunApi.delete(`/${id}`)
+
+      if (urejanjeProracunaId === id) {
+        prekliciUrejanje()
+      }
+
+      await naloziProracune()
+
+      alert('Proračun je bil uspešno izbrisan.')
+    } catch (napaka) {
+      console.error('Napaka pri brisanju proračuna:', napaka)
+      alert('Proračuna ni bilo mogoče izbrisati.')
+    }
+  }
+
+  async function shraniProracun(event) {
+    event.preventDefault()
+
+    if (!novaKategorija || Number(noviZnesek) <= 0 ||
+        !datumZacetka || !datumKonca) {
+      alert('Izpolni vsa polja in vnesi znesek, večji od 0.')
+      return
+    }
+
+    if (datumZacetka > datumKonca) {
+      alert('Začetni datum ne sme biti poznejši od končnega.')
+      return
+    }
+
+    const podatki = {
+      kategorija: novaKategorija,
+      znesek: Number(noviZnesek),
+      datumZacetka,
+      datumKonca,
+    }
+
+    try {
+      if (urejanjeProracunaId !== null) {
+        await proracunApi.put(`/${urejanjeProracunaId}`, podatki)
+      } else {
+        await proracunApi.post('', podatki)
+      }
+
+      await naloziProracune()
+
+      setNovaKategorija('Hrana')
+      setNoviZnesek('')
+      setDatumZacetka('')
+      setDatumKonca('')
+      setUrejanjeProracunaId(null)
+
+      //alert('Proračun je bil uspešno shranjen.')
+    } catch (napaka) {
+      console.error('Napaka pri shranjevanju proračuna:', napaka)
+
+      const sporocilo = napaka.response?.data?.detail ||
+          'Proračuna ni bilo mogoče shraniti.'
+
+      alert(sporocilo)
+    }
+  }
+
 
   async function prikaziAnalizo(event) {
     event.preventDefault()
@@ -171,270 +284,436 @@ function App() {
           <span className="oznaka">OSEBNI PREGLED</span>
         </header>
 
-        <section className="pozdrav">
-          <p className="nadnaslov">TVOJE FINANCE, NA ENEM MESTU</p>
-          <h2>Pregled stroškov</h2>
-          <p>Enostavno spremljaj, kam gre tvoj denar.</p>
-        </section>
+        <nav className="navigacija">
+          <button
+              type="button"
+              onClick={() => setAktivnaStran('stroski')}
+          >
+            Moji stroški
+          </button>
 
-        <section className="povzetek">
-          <article className="kartica">
-            <span className="kartica-ikona">€</span>
-            <p>Skupni stroški</p>
-            <strong>{formatirajZnesek(skupaj)}</strong>
-            <small>Vsota vseh prikazanih stroškov</small>
-          </article>
+          <button
+              type="button"
+              onClick={() => setAktivnaStran('proracuni')}
+          >
+            Proračuni
+          </button>
+        </nav>
 
-          <article className="kartica">
-            <span className="kartica-ikona">#</span>
-            <p>Število stroškov</p>
-            <strong>{stroski.length}</strong>
-            <small>Zabeleženi posamezni izdatki</small>
-          </article>
-        </section>
+        {aktivnaStran === 'stroski' && (
+            <>
 
-        <section className="vsebina">
-          <div className="panel obrazec-panel">
-            <div className="panel-glava">
-              <div>
-                <h3>{urejanjeId !== null ? 'Uredi strošek' : 'Dodaj strošek'}</h3>
-                <p>Vnesi podrobnosti izdatka.</p>
+          <section className="pozdrav">
+            <p className="nadnaslov">TVOJE FINANCE, NA ENEM MESTU</p>
+            <h2>Pregled stroškov</h2>
+            <p>Enostavno spremljaj, kam gre tvoj denar.</p>
+          </section>
+
+          <section className="povzetek">
+            <article className="kartica">
+              <span className="kartica-ikona">€</span>
+              <p>Skupni stroški</p>
+              <strong>{formatirajZnesek(skupaj)}</strong>
+              <small>Vsota vseh prikazanih stroškov</small>
+            </article>
+
+            <article className="kartica">
+              <span className="kartica-ikona">#</span>
+              <p>Število stroškov</p>
+              <strong>{stroski.length}</strong>
+              <small>Zabeleženi posamezni izdatki</small>
+            </article>
+          </section>
+
+          <section className="vsebina">
+            <div className="panel obrazec-panel">
+              <div className="panel-glava">
+                <div>
+                  <h3>{urejanjeId !== null ? 'Uredi strošek' : 'Dodaj strošek'}</h3>
+                  <p>Vnesi podrobnosti izdatka.</p>
+                </div>
+                <span className="plus">+</span>
               </div>
-              <span className="plus">+</span>
+
+              <form onSubmit={shraniStrosek}>
+                <label htmlFor="opis">Opis stroška</label>
+                <input
+                    id="opis"
+                    value={opis}
+                    onChange={(e) => setOpis(e.target.value)}
+                    placeholder="Npr. Nakup živil"
+                    required
+                />
+
+                <label htmlFor="znesek">Znesek (€)</label>
+                <input
+                    id="znesek"
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    value={znesek}
+                    onChange={(e) => setZnesek(e.target.value)}
+                    placeholder="0,00"
+                    required
+                />
+
+                <label htmlFor="kategorija">Kategorija</label>
+                <select
+                    id="kategorija"
+                    value={kategorija}
+                    onChange={(e) => setKategorija(e.target.value)}
+                >
+                  <option>Hrana</option>
+                  <option>Prevoz</option>
+                  <option>Stanovanje</option>
+                  <option>Prosti čas</option>
+                  <option>Zdravje</option>
+                  <option>Drugo</option>
+                </select>
+
+                <label htmlFor="datum">Datum</label>
+                <input
+                    id="datum"
+                    type="date"
+                    value={datum}
+                    onChange={(e) => setDatum(e.target.value)}
+                    required
+                />
+
+                <button className="gumb-glavni" type="submit">
+                  {urejanjeId !== null ? 'Shrani spremembe' : '+ Dodaj strošek'}
+                </button>
+
+                {urejanjeId !== null && (
+                    <button
+                        className="gumb-preklic"
+                        type="button"
+                        onClick={ponastaviObrazec}
+                    >
+                      Prekliči urejanje
+                    </button>
+                )}
+              </form>
             </div>
 
-            <form onSubmit={shraniStrosek}>
-              <label htmlFor="opis">Opis stroška</label>
-              <input
-                  id="opis"
-                  value={opis}
-                  onChange={(e) => setOpis(e.target.value)}
-                  placeholder="Npr. Nakup živil"
-                  required
-              />
+            <div className="panel tabela-panel">
+              <div className="panel-glava">
+                <div>
+                  <h3>Moji izdatki</h3>
+                  <p>Pregled vseh zabeleženih stroškov.</p>
+                </div>
+                <span className="stevec">{stroski.length} zapisov</span>
+              </div>
 
-              <label htmlFor="znesek">Znesek (€)</label>
-              <input
-                  id="znesek"
-                  type="number"
-                  min="0.01"
-                  step="0.01"
-                  value={znesek}
-                  onChange={(e) => setZnesek(e.target.value)}
-                  placeholder="0,00"
-                  required
-              />
-
-              <label htmlFor="kategorija">Kategorija</label>
-              <select
-                  id="kategorija"
-                  value={kategorija}
-                  onChange={(e) => setKategorija(e.target.value)}
-              >
-                <option>Hrana</option>
-                <option>Prevoz</option>
-                <option>Stanovanje</option>
-                <option>Prosti čas</option>
-                <option>Zdravje</option>
-                <option>Drugo</option>
-              </select>
-
-              <label htmlFor="datum">Datum</label>
-              <input
-                  id="datum"
-                  type="date"
-                  value={datum}
-                  onChange={(e) => setDatum(e.target.value)}
-                  required
-              />
-
-              <button className="gumb-glavni" type="submit">
-                {urejanjeId !== null ? 'Shrani spremembe' : '+ Dodaj strošek'}
-              </button>
-
-              {urejanjeId !== null && (
-                  <button
-                      className="gumb-preklic"
-                      type="button"
-                      onClick={ponastaviObrazec}
-                  >
-                    Prekliči urejanje
-                  </button>
+              {stroski.length === 0 ? (
+                  <p className="prazno">Ni še nobenega stroška. Dodaj svojega!</p>
+              ) : (
+                  <div className="tabela-ovoj">
+                    <table>
+                      <thead>
+                      <tr>
+                        <th>Opis</th>
+                        <th>Kategorija</th>
+                        <th>Datum</th>
+                        <th>Znesek</th>
+                        <th>Dejanja</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      {stroski.map((strosek) => (
+                          <tr key={strosek.id}>
+                            <td className="opis-celica">{strosek.opis}</td>
+                            <td>
+                          <span className="kategorija">
+                            {strosek.kategorija}
+                          </span>
+                            </td>
+                            <td>{strosek.datum}</td>
+                            <td className="znesek-celica">
+                              {formatirajZnesek(strosek.znesek)}
+                            </td>
+                            <td>
+                              <div className="dejanja">
+                                <button
+                                    className="gumb-uredi"
+                                    type="button"
+                                    onClick={() => zacniUrejanje(strosek)}
+                                >
+                                  Uredi
+                                </button>
+                                <button
+                                    className="gumb-izbrisi"
+                                    type="button"
+                                    onClick={() => izbrisiStrosek(strosek.id)}
+                                >
+                                  Briši
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                      ))}
+                      </tbody>
+                    </table>
+                  </div>
               )}
-            </form>
-          </div>
+            </div>
+          </section>
 
-          <div className="panel tabela-panel">
+
+          <section className="panel analiza-panel">
             <div className="panel-glava">
               <div>
-                <h3>Moji izdatki</h3>
-                <p>Pregled vseh zabeleženih stroškov.</p>
+                <h3>Analiza stroškov</h3>
+                <p>Izberi obdobje in preveri svoje izdatke.</p>
               </div>
-              <span className="stevec">{stroski.length} zapisov</span>
+              <span className="plus">€</span>
             </div>
 
-            {stroski.length === 0 ? (
-                <p className="prazno">Ni še nobenega stroška. Dodaj svojega!</p>
-            ) : (
-                <div className="tabela-ovoj">
-                  <table>
-                    <thead>
-                    <tr>
-                      <th>Opis</th>
-                      <th>Kategorija</th>
-                      <th>Datum</th>
-                      <th>Znesek</th>
-                      <th>Dejanja</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {stroski.map((strosek) => (
-                        <tr key={strosek.id}>
-                          <td className="opis-celica">{strosek.opis}</td>
-                          <td>
-                        <span className="kategorija">
-                          {strosek.kategorija}
-                        </span>
-                          </td>
-                          <td>{strosek.datum}</td>
-                          <td className="znesek-celica">
-                            {formatirajZnesek(strosek.znesek)}
-                          </td>
-                          <td>
-                            <div className="dejanja">
-                              <button
-                                  className="gumb-uredi"
-                                  type="button"
-                                  onClick={() => zacniUrejanje(strosek)}
-                              >
-                                Uredi
-                              </button>
-                              <button
-                                  className="gumb-izbrisi"
-                                  type="button"
-                                  onClick={() => izbrisiStrosek(strosek.id)}
-                              >
-                                Briši
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                    ))}
-                    </tbody>
-                  </table>
+            <form className="analiza-obrazec" onSubmit={prikaziAnalizo}>
+              <div className="analiza-polje">
+                <label htmlFor="datumOd">Začetni datum</label>
+                <input
+                    id="datumOd"
+                    type="date"
+                    value={datumOd}
+                    onChange={(e) => setDatumOd(e.target.value)}
+                    required
+                />
+              </div>
+
+              <div className="analiza-polje">
+                <label htmlFor="datumDo">Končni datum</label>
+                <input
+                    id="datumDo"
+                    type="date"
+                    value={datumDo}
+                    onChange={(e) => setDatumDo(e.target.value)}
+                    required
+                />
+              </div>
+
+              <div className="analiza-polje">
+                <label htmlFor="filterKategorija">Kategorija</label>
+                <select
+                    id="filterKategorija"
+                    value={filterKategorija}
+                    onChange={(e) => setFilterKategorija(e.target.value)}
+                >
+                  <option>Vse kategorije</option>
+                  <option>Hrana</option>
+                  <option>Prevoz</option>
+                  <option>Stanovanje</option>
+                  <option>Prosti čas</option>
+                  <option>Zdravje</option>
+                  <option>Drugo</option>
+                </select>
+              </div>
+
+              <button className="gumb-glavni" type="submit" disabled={nalaganjeAnalize}>
+                {nalaganjeAnalize ? 'Nalagam...' : 'Prikaži analizo'}
+              </button>
+            </form>
+
+            {napakaAnalize && (
+                <p className="analiza-napaka">{napakaAnalize}</p>
+            )}
+
+            {analiza !== null && (
+                <div className="analiza-rezultat">
+                  <div className="analiza-vsota">
+                    <span>Skupaj v izbranem obdobju</span>
+                    <strong>{formatirajZnesek(Number(analiza.skupaj))}</strong>
+                    <small>
+                      {analiza.stroski.length} {analiza.stroski.length === 1
+                        ? 'strošek'
+                        : 'stroškov'}
+                    </small>
+                  </div>
+
+                  {analiza.stroski.length === 0 ? (
+                      <p className="prazno">
+                        V izbranem obdobju ni zabeleženih stroškov.
+                      </p>
+                  ) : (
+                      <div className="tabela-ovoj analiza-tabela">
+                        <table>
+                          <thead>
+                          <tr>
+                            <th>Opis</th>
+                            <th>Kategorija</th>
+                            <th>Datum</th>
+                            <th>Znesek</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          {analiza.stroski.map((strosek) => (
+                              <tr key={strosek.id}>
+                                <td className="opis-celica">{strosek.opis}</td>
+                                <td>
+                      <span className="kategorija">
+                        {strosek.kategorija}
+                      </span>
+                                </td>
+                                <td>{strosek.datum}</td>
+                                <td className="znesek-celica">
+                                  {formatirajZnesek(Number(strosek.znesek))}
+                                </td>
+                              </tr>
+                          ))}
+                          </tbody>
+                        </table>
+                      </div>
+                  )}
                 </div>
             )}
-          </div>
-        </section>
+          </section>
 
+          </>
+        )}
 
-        <section className="panel analiza-panel">
-          <div className="panel-glava">
-            <div>
-              <h3>Analiza stroškov</h3>
-              <p>Izberi obdobje in preveri svoje izdatke.</p>
-            </div>
-            <span className="plus">€</span>
-          </div>
-
-          <form className="analiza-obrazec" onSubmit={prikaziAnalizo}>
-            <div className="analiza-polje">
-              <label htmlFor="datumOd">Začetni datum</label>
-              <input
-                  id="datumOd"
-                  type="date"
-                  value={datumOd}
-                  onChange={(e) => setDatumOd(e.target.value)}
-                  required
-              />
-            </div>
-
-            <div className="analiza-polje">
-              <label htmlFor="datumDo">Končni datum</label>
-              <input
-                  id="datumDo"
-                  type="date"
-                  value={datumDo}
-                  onChange={(e) => setDatumDo(e.target.value)}
-                  required
-              />
-            </div>
-
-            <div className="analiza-polje">
-              <label htmlFor="filterKategorija">Kategorija</label>
-              <select
-                  id="filterKategorija"
-                  value={filterKategorija}
-                  onChange={(e) => setFilterKategorija(e.target.value)}
-              >
-                <option>Vse kategorije</option>
-                <option>Hrana</option>
-                <option>Prevoz</option>
-                <option>Stanovanje</option>
-                <option>Prosti čas</option>
-                <option>Zdravje</option>
-                <option>Drugo</option>
-              </select>
-            </div>
-
-            <button className="gumb-glavni" type="submit" disabled={nalaganjeAnalize}>
-              {nalaganjeAnalize ? 'Nalagam...' : 'Prikaži analizo'}
-            </button>
-          </form>
-
-          {napakaAnalize && (
-              <p className="analiza-napaka">{napakaAnalize}</p>
-          )}
-
-          {analiza !== null && (
-              <div className="analiza-rezultat">
-                <div className="analiza-vsota">
-                  <span>Skupaj v izbranem obdobju</span>
-                  <strong>{formatirajZnesek(Number(analiza.skupaj))}</strong>
-                  <small>
-                    {analiza.stroski.length} {analiza.stroski.length === 1
-                      ? 'strošek'
-                      : 'stroškov'}
-                  </small>
+        {aktivnaStran === 'proracuni' && (
+            <section className="panel">
+              <div className="panel-glava">
+                <div>
+                  <h3>Moji proračuni</h3>
+                  <p>Upravljaj svoje proračune po kategorijah.</p>
                 </div>
-
-                {analiza.stroski.length === 0 ? (
-                    <p className="prazno">
-                      V izbranem obdobju ni zabeleženih stroškov.
-                    </p>
-                ) : (
-                    <div className="tabela-ovoj analiza-tabela">
-                      <table>
-                        <thead>
-                        <tr>
-                          <th>Opis</th>
-                          <th>Kategorija</th>
-                          <th>Datum</th>
-                          <th>Znesek</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {analiza.stroski.map((strosek) => (
-                            <tr key={strosek.id}>
-                              <td className="opis-celica">{strosek.opis}</td>
-                              <td>
-                    <span className="kategorija">
-                      {strosek.kategorija}
-                    </span>
-                              </td>
-                              <td>{strosek.datum}</td>
-                              <td className="znesek-celica">
-                                {formatirajZnesek(Number(strosek.znesek))}
-                              </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                      </table>
-                    </div>
-                )}
+                <span className="plus">€</span>
               </div>
-          )}
-        </section>
+
+              <form onSubmit={shraniProracun}>
+                <label htmlFor="novaKategorija">Kategorija</label>
+                <select
+                    id="novaKategorija"
+                    value={novaKategorija}
+                    onChange={(e) => setNovaKategorija(e.target.value)}
+                >
+                  <option>Hrana</option>
+                  <option>Prevoz</option>
+                  <option>Stanovanje</option>
+                  <option>Prosti čas</option>
+                  <option>Zdravje</option>
+                  <option>Drugo</option>
+                </select>
+
+                <label htmlFor="noviZnesek">Najvišji dovoljeni znesek (€)</label>
+                <input
+                    id="noviZnesek"
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    value={noviZnesek}
+                    onChange={(e) => setNoviZnesek(e.target.value)}
+                    placeholder="0,00"
+                    required
+                />
+
+                <label htmlFor="datumZacetka">Začetni datum</label>
+                <input
+                    id="datumZacetka"
+                    type="date"
+                    value={datumZacetka}
+                    onChange={(e) => setDatumZacetka(e.target.value)}
+                    required
+                />
+
+                <label htmlFor="datumKonca">Končni datum</label>
+                <input
+                    id="datumKonca"
+                    type="date"
+                    value={datumKonca}
+                    onChange={(e) => setDatumKonca(e.target.value)}
+                    required
+                />
+
+                <button className="gumb-glavni" type="submit">
+                  {urejanjeProracunaId !== null
+                      ? 'Shrani spremembe'
+                      : '+ Dodaj proračun'}
+                </button>
+
+                {urejanjeProracunaId !== null && (
+                    <button
+                        className="gumb-preklic"
+                        type="button"
+                        onClick={prekliciUrejanje}
+                    >
+                      Prekliči
+                    </button>
+                )}
+              </form>
+
+              {proracuni.length === 0 ? (
+                  <p className="prazno">
+                    Trenutno nimaš ustvarjenega nobenega proračuna.
+                  </p>
+              ) : (
+                  <div className="tabela-ovoj">
+                    <table>
+                      <thead>
+                      <tr>
+                        <th>Kategorija</th>
+                        <th>Obdobje</th>
+                        <th>Dovoljeni znesek</th>
+                        <th>Poraba</th>
+                        <th>Poraba (%)</th>
+                        <th>Opozorilo</th>
+                        <th>Dejanja</th>
+                      </tr>
+                      </thead>
+
+                      <tbody>
+                      {proracuni.map((proracun) => (
+                          <tr key={proracun.id}>
+                            <td>{proracun.kategorija}</td>
+                            <td>
+                              {proracun.datumZacetka} – {proracun.datumKonca}
+                            </td>
+                            <td>{formatirajZnesek(Number(proracun.znesek))}</td>
+                            <td>{formatirajZnesek(Number(proracun.poraba))}</td>
+                            <td>{Number(proracun.odstotekPorabe).toFixed(2)} %</td>
+                            <td className="opozorilo-celica">
+                              {proracun.opozorilo ? (
+                                  <strong
+                                      className={
+                                        Number(proracun.odstotekPorabe) >= 100
+                                            ? 'opozorilo opozorilo-prekoracen'
+                                            : 'opozorilo'
+                                      }
+                                  >
+                                    {proracun.opozorilo}
+                                  </strong>
+                              ) : (
+                                  <span>Ni opozorila</span>
+                              )}
+                            </td>
+                            <td>
+                              <div className="dejanja">
+                                <button
+                                    className="gumb-uredi"
+                                    type="button"
+                                    onClick={() => urediProracun(proracun)}
+                                >
+                                  Uredi
+                                </button>
+
+                                <button
+                                    className="gumb-izbrisi"
+                                    type="button"
+                                    onClick={() => izbrisiProracun(proracun.id)}
+                                >
+                                  Izbriši
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                      ))}
+                      </tbody>
+                    </table>
+                  </div>
+              )}
+            </section>
+        )}
 
         <footer>
           Tim Kovačič - Aplikacija za sledenje lastnim stroškom

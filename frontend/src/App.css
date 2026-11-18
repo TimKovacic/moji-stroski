@@ -424,3 +424,26 @@ footer {
   }
 }
 
+/* Opozorila pri proračunih */
+.opozorilo {
+  display: inline-block;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: #fff4df;
+  color: #a66508;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.opozorilo-prekoracen {
+  background: #fff0ef;
+  color: #bf4141;
+}
+
+.opozorilo-celica {
+  width: 280px;
+  min-width: 280px;
+  white-space: normal;
+  overflow-wrap: break-word;
+  vertical-align: middle;
+}
