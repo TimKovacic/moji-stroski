@@ -72,3 +72,48 @@ Odstotek porabe:
 **Ohranjanje zgodovine:**
 
 Brisanje ali potek proračuna ne bo izbrisal evidentiranih stroškov. Poraba novega proračuna se bo izračunavala samo na podlagi stroškov znotraj njegovega obdobja.
+
+## PU-07 – Izvozi poročilo o stroških
+
+**Odgovorni član:** Luka Poprask
+
+**Uporabniška zgodba:**
+Kot uporabnik želim svoje stroške izvoziti v poročilo PDF, da imam pregled nad njimi tudi zunaj aplikacije.
+
+### Kriteriji sprejemljivosti (Acceptance Criteria)
+
+**AC-01 – Izvoz stroškov v PDF**
+
+- **Given:** V podatkovni bazi je vsaj en strošek.
+- **When:** Uporabnik izbere izvoz poročila.
+- **Then:** Aplikacija pridobi stroške iz podatkovne baze, pripravi datoteko PDF s podatki o stroških (opis, znesek, kategorija in datum) ter sproži prenos datoteke na uporabnikovo napravo.
+
+**AC-02 – Brez stroškov ni mogoče ustvariti poročila**
+
+- **Given:** V podatkovni bazi ni zabeležen noben strošek.
+- **When:** Uporabnik izbere izvoz poročila.
+- **Then:** Aplikacija ne ustvari in ne prenese PDF-ja ter uporabnika obvesti, da poročila ni mogoče ustvariti, ker ni zabeleženih stroškov.
+
+**AC-03 – Napaka pri pridobivanju ali prenosu**
+
+- **Given:** Pri pridobivanju stroškov iz podatkovne baze ali pripravi oziroma prenosu PDF-ja pride do napake.
+- **When:** Uporabnik poskusi izvoziti poročilo.
+- **Then:** Aplikacija ne prikaže nepopolnega poročila in uporabnika obvesti, da izvoz ni uspel.
+
+### Tehnične podrobnosti implementacije (Implementation Details)
+
+**Podatkovna baza:**
+- Poročilo uporablja obstoječe stroške iz tabele `strosek`; nova tabela ni potrebna.
+- Stroški se pridobijo iz podatkovne baze ob zahtevi za izvoz, da poročilo vsebuje aktualne podatke.
+
+**Backend (Spring Boot):**
+- Backend pridobi stroške prek obstoječega `StrosekRepository` in pripravi PDF z opisom, zneskom v EUR, kategorijo in datumom vsakega stroška.
+- Če je seznam stroškov prazen, backend ne ustvari datoteke in vrne ustrezen odgovor, ki frontendu omogoča prikaz obvestila.
+- Odgovor za uspešen izvoz vrne PDF kot datoteko za prenos. Napake pri dostopu do podatkov ali ustvarjanju PDF-ja se obravnavajo kot neuspešen izvoz.
+
+**Frontend (React):**
+- V pregledu stroškov je uporabniku na voljo možnost »Izvozi v PDF«.
+- Ob uspešnem odgovoru frontend sproži prenos PDF-ja na uporabnikovo napravo. Če ni stroškov ali izvoz ne uspe, prikaže ustrezno obvestilo.
+
+**Ohranjanje zgodovine:**
+- Izvoz ne spreminja ali briše stroškov v podatkovni bazi; PDF je kopija podatkov za ogled zunaj aplikacije.
