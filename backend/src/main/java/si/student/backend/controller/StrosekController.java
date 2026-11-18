@@ -10,6 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import si.student.backend.repository.StrosekRepository;
 import si.student.backend.services.Strosek;
+import com.lowagie.text.Document;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+import java.io.ByteArrayOutputStream;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -114,5 +127,95 @@ public class StrosekController {
                 "stroski", rezultat,
                 "skupaj", skupaj
         );
+    }
+
+    //za izvoz poročila v obliki pdf datoteke
+    @GetMapping("/izvoz/pdf")
+    public ResponseEntity<ByteArrayResource> izvoziPdf(
+        @RequestParam("od")
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+        LocalDate od,
+
+        @RequestParam("do")
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+        LocalDate doDatuma,
+
+        @RequestParam(value = "kategorija", required = false)
+        String kategorija) {
+    if (od.isAfter(doDatuma)) {
+        throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "Začetni datum ne sme biti za končnim datumom."
+        );
+    }
+
+    List<Strosek> stroski;
+
+    if (kategorija == null || kategorija.isBlank()
+            || kategorija.equals("Vse kategorije")) {
+        stroski = repository.findByDatumBetween(od, doDatuma);
+    } else {
+        stroski = repository.findByDatumBetweenAndKategorija(
+                od, doDatuma, kategorija
+        );
+    }
+
+        if (stroski.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Poročila ni mogoče ustvariti, ker ni zabeleženih stroškov na tem profilu."
+            );
+        }
+
+        try {
+            ByteArrayOutputStream izhod = new ByteArrayOutputStream();
+
+            Document dokument = new Document();
+            PdfWriter.getInstance(dokument, izhod);
+
+            dokument.open();
+
+            Font naslovnaPisava = FontFactory.getFont(
+                    FontFactory.HELVETICA_BOLD, 18
+            );
+
+            dokument.add(new Paragraph(
+                    "Poročilo o stroških",
+                    naslovnaPisava
+            ));
+
+            dokument.add(new Paragraph(" "));
+
+            PdfPTable tabela = new PdfPTable(4);
+            tabela.setWidthPercentage(100);
+            tabela.setWidths(new float[]{3, 2, 2, 2});
+
+            String[] glave = {"Opis", "Kategorija", "Datum", "Znesek"};
+
+            for (String glava : glave) {
+                PdfPCell celica = new PdfPCell(new Phrase(glava));
+                tabela.addCell(celica);
+            }
+
+            for (Strosek strosek : stroski) {
+                tabela.addCell(strosek.getOpis());
+                tabela.addCell(strosek.getKategorija());
+                tabela.addCell(strosek.getDatum().toString());
+                tabela.addCell(strosek.getZnesek() + " EUR");
+            }
+
+            dokument.add(tabela);
+            dokument.close();
+
+            ByteArrayResource pdf = new ByteArrayResource(izhod.toByteArray());
+
+            return ResponseEntity.ok().header(
+                    HttpHeaders.CONTENT_DISPOSITION,
+                    "attachment; filename=porocilo-o-stroskih.pdf"
+            ).contentType(MediaType.APPLICATION_PDF).contentLength(pdf.contentLength()).body(pdf);
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Poročila ni bilo mogoče ustvariti."
+            );
+        }
     }
 }

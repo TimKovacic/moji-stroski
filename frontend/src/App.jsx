@@ -227,6 +227,42 @@ function App() {
     }
   }
 
+  async function izvoziPdf() {
+    try {
+      const odgovor = await api.get('/izvoz/pdf', {
+        params: {
+          od: datumOd,
+          do: datumDo,
+          kategorija: filterKategorija,
+        },
+        responseType: 'blob',
+      })
+
+     const url = window.URL.createObjectURL(
+         new Blob([odgovor.data], { type: 'application/pdf' })
+     )
+
+     const povezava = document.createElement('a')
+     povezava.href = url
+
+     const imeKategorije = filterKategorija.toLowerCase().replaceAll(' ', '-')
+     povezava.download = `porocilo-${imeKategorije}-${datumOd}-do-${datumDo}.pdf`
+
+     document.body.appendChild(povezava)
+     povezava.click()
+     povezava.remove()
+
+     window.URL.revokeObjectURL(url)
+    } catch (napaka) {
+      if (napaka.response?.status === 400) {
+        alert('Poročila ni mogoče ustvariti, ker ni zabeleženih stroškov v profilu.')
+      } else {
+        alert('Izvoz poročila ni uspe. Poskusite znova.')
+      }
+
+      console.error('Napaka pri izvozu PDF-ja:', napaka)
+    }
+  }
 
   function zacniUrejanje(strosek) { //prenese podatke izbrane vrstice v obrazec
     setUrejanjeId(strosek.id)
@@ -512,6 +548,7 @@ function App() {
               <button className="gumb-glavni" type="submit" disabled={nalaganjeAnalize}>
                 {nalaganjeAnalize ? 'Nalagam...' : 'Prikaži analizo'}
               </button>
+              <button className="gumb-glavni" type="button" onClick={izvoziPdf}>Izvozi v PDF</button>
             </form>
 
             {napakaAnalize && (
