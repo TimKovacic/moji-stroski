@@ -1,5 +1,40 @@
 # Uporabniške zgodbe – Moji stroški
 
+## PU-05 – Iskanje stroškov po nazivu
+
+**Odgovorni član:** Klemen Kovač
+
+**Uporabniška zgodba:**
+Kot uporabnik želim v seznamu svojih stroškov poiskati določen izdatek po besedilu (opisu), da ga hitro najdem in mi ni treba ročno pregledovati celotnega seznama.
+
+### Kriteriji sprejemljivosti (Acceptance Criteria)
+
+**AC-01 – Uspešno iskanje**
+- **Given:** Uporabnik ima v seznamu vsaj en strošek z opisom (npr. "Nakup živil").
+- **When:** Uporabnik v iskalno polje vnese del opisa (npr. "živil") in počaka na rezultat.
+- **Then:** Aplikacija prikaže le tiste stroške, katerih opis vsebuje iskani niz.
+
+**AC-02 – Iskanje brez zadetkov**
+- **Given:** Uporabnik je v pregledu stroškov.
+- **When:** V iskalno polje vnese niz, ki se ne ujema z nobenim opisom (npr. "xyz123").
+- **Then:** Aplikacija prikaže sporočilo "Ni najdenih stroškov" in ne prikaže seznama.
+
+**AC-03 – Prazen iskalni niz**
+- **Given:** Uporabnik je že vnesel iskalni niz in vidi filtrirane rezultate.
+- **When:** Izbriše vsebino iskalnega polja (prazno polje).
+- **Then:** Aplikacija ponovno prikaže celoten seznam vseh stroškov.
+
+### Tehnične podrobnosti implementacije (Implementation Details)
+
+**Backend (Spring Boot):**
+- Ni potrebe po spremembi obstoječega `StrosekController` ali `StrosekRepository`.
+- Iskanje se izvede na frontend strani, saj so vsi podatki že naloženi v pomnilnik.
+
+**Frontend (React):**
+- V obstoječo komponento `App.jsx` se doda novo stanje `iskalniNiz`.
+- Seznam stroškov se filtrira glede na vneseni niz neposredno v `App.jsx`.
+- V uporabniški vmesnik (panel "Moji izdatki") se doda iskalno polje.
+
 ## PU-06 – Nastavi proračun po kategoriji
 
 **Odgovorni član:** Tim Kovačič
