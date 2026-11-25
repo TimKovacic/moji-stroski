@@ -1,5 +1,40 @@
 # Uporabniške zgodbe – Moji stroški
 
+## PU-05 – Iskanje stroškov po nazivu
+
+**Odgovorni član:** Klemen Kovač
+
+**Uporabniška zgodba:**
+Kot uporabnik želim v seznamu svojih stroškov poiskati določen izdatek po besedilu (opisu), da ga hitro najdem in mi ni treba ročno pregledovati celotnega seznama.
+
+### Kriteriji sprejemljivosti (Acceptance Criteria)
+
+**AC-01 – Uspešno iskanje**
+- **Given:** Uporabnik ima v seznamu vsaj en strošek z opisom (npr. "Nakup živil").
+- **When:** Uporabnik v iskalno polje vnese del opisa (npr. "živil") in počaka na rezultat.
+- **Then:** Aplikacija prikaže le tiste stroške, katerih opis vsebuje iskani niz.
+
+**AC-02 – Iskanje brez zadetkov**
+- **Given:** Uporabnik je v pregledu stroškov.
+- **When:** V iskalno polje vnese niz, ki se ne ujema z nobenim opisom (npr. "xyz123").
+- **Then:** Aplikacija prikaže sporočilo "Ni najdenih stroškov" in ne prikaže seznama.
+
+**AC-03 – Prazen iskalni niz**
+- **Given:** Uporabnik je že vnesel iskalni niz in vidi filtrirane rezultate.
+- **When:** Izbriše vsebino iskalnega polja (prazno polje).
+- **Then:** Aplikacija ponovno prikaže celoten seznam vseh stroškov.
+
+### Tehnične podrobnosti implementacije (Implementation Details)
+
+**Backend (Spring Boot):**
+- Ni potrebe po spremembi obstoječega `StrosekController` ali `StrosekRepository`.
+- Iskanje se izvede na frontend strani, saj so vsi podatki že naloženi v pomnilnik.
+
+**Frontend (React):**
+- V obstoječo komponento `App.jsx` se doda novo stanje `iskalniNiz`.
+- Seznam stroškov se filtrira glede na vneseni niz neposredno v `App.jsx`.
+- V uporabniški vmesnik (panel "Moji izdatki") se doda iskalno polje.
+
 ## PU-06 – Nastavi proračun po kategoriji
 
 **Odgovorni član:** Tim Kovačič
@@ -73,3 +108,48 @@ Odstotek porabe:
 **Ohranjanje zgodovine:**
 
 Brisanje ali potek proračuna ne bo izbrisal evidentiranih stroškov. Poraba novega proračuna se bo izračunavala samo na podlagi stroškov znotraj njegovega obdobja.
+
+## PU-07 – Izvozi poročilo o stroških
+
+**Odgovorni član:** Luka Poprask
+
+**Uporabniška zgodba:**
+Kot uporabnik želim svoje stroške izvoziti v poročilo PDF, da imam pregled nad njimi tudi zunaj aplikacije.
+
+### Kriteriji sprejemljivosti (Acceptance Criteria)
+
+**AC-01 – Izvoz stroškov v PDF**
+
+- **Given:** V podatkovni bazi je vsaj en strošek.
+- **When:** Uporabnik izbere izvoz poročila.
+- **Then:** Aplikacija pridobi stroške iz podatkovne baze, pripravi datoteko PDF s podatki o stroških (opis, znesek, kategorija in datum) ter sproži prenos datoteke na uporabnikovo napravo.
+
+**AC-02 – Brez stroškov ni mogoče ustvariti poročila**
+
+- **Given:** V podatkovni bazi ni zabeležen noben strošek.
+- **When:** Uporabnik izbere izvoz poročila.
+- **Then:** Aplikacija ne ustvari in ne prenese PDF-ja ter uporabnika obvesti, da poročila ni mogoče ustvariti, ker ni zabeleženih stroškov.
+
+**AC-03 – Napaka pri pridobivanju ali prenosu**
+
+- **Given:** Pri pridobivanju stroškov iz podatkovne baze ali pripravi oziroma prenosu PDF-ja pride do napake.
+- **When:** Uporabnik poskusi izvoziti poročilo.
+- **Then:** Aplikacija ne prikaže nepopolnega poročila in uporabnika obvesti, da izvoz ni uspel.
+
+### Tehnične podrobnosti implementacije (Implementation Details)
+
+**Podatkovna baza:**
+- Poročilo uporablja obstoječe stroške iz tabele `strosek`; nova tabela ni potrebna.
+- Stroški se pridobijo iz podatkovne baze ob zahtevi za izvoz, da poročilo vsebuje aktualne podatke.
+
+**Backend (Spring Boot):**
+- Backend pridobi stroške prek obstoječega `StrosekRepository` in pripravi PDF z opisom, zneskom v EUR, kategorijo in datumom vsakega stroška.
+- Če je seznam stroškov prazen, backend ne ustvari datoteke in vrne ustrezen odgovor, ki frontendu omogoča prikaz obvestila.
+- Odgovor za uspešen izvoz vrne PDF kot datoteko za prenos. Napake pri dostopu do podatkov ali ustvarjanju PDF-ja se obravnavajo kot neuspešen izvoz.
+
+**Frontend (React):**
+- V pregledu stroškov je uporabniku na voljo možnost »Izvozi v PDF«.
+- Ob uspešnem odgovoru frontend sproži prenos PDF-ja na uporabnikovo napravo. Če ni stroškov ali izvoz ne uspe, prikaže ustrezno obvestilo.
+
+**Ohranjanje zgodovine:**
+- Izvoz ne spreminja ali briše stroškov v podatkovni bazi; PDF je kopija podatkov za ogled zunaj aplikacije.
