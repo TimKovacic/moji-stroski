@@ -1,0 +1,79 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36" version="29.2.7">
+  <diagram name="Page-1" id="1i23O4jmUsCT11OFiW_1">
+    <mxGraphModel dx="2256" dy="2011" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="4MUX10FxJa0AkUP26uzS-8" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;Strosek&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="330" width="310" x="30" y="-400" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-9" parent="4MUX10FxJa0AkUP26uzS-8" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;- id: Long&lt;br/&gt;- opis: String&lt;br/&gt;- znesek: BigDecimal&lt;br/&gt;- kategorija: String&lt;br/&gt;- datum: LocalDate&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="100" width="310" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-10" parent="4MUX10FxJa0AkUP26uzS-8" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;+ Strosek()&lt;br/&gt;+ Strosek(opis, znesek, kategorija, datum)&lt;br/&gt;+ getId(): Long&lt;br/&gt;+ getOpis(): String&lt;br/&gt;+ getZnesek(): BigDecimal&lt;br/&gt;+ getKategorija(): String&lt;br/&gt;+ getDatum(): LocalDate&lt;br/&gt;+ setId(id: Long): void&lt;br/&gt;+ setOpis(opis: String): void&lt;br/&gt;+ setZnesek(znesek: BigDecimal): void&lt;br/&gt;+ setKategorija(kategorija: String): void&lt;br/&gt;+ setDatum(datum: LocalDate): void&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="200" width="310" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-14" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;Proracun&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="310" width="340" x="414" y="-400" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-15" parent="4MUX10FxJa0AkUP26uzS-14" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;- id: Long&lt;br/&gt;- kategorija: String&lt;br/&gt;- znesek: BigDecimal&lt;br/&gt;- datumZacetka: LocalDate&lt;br/&gt;- datumKonca: LocalDate&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="100" width="340" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-16" parent="4MUX10FxJa0AkUP26uzS-14" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;+ Proracun()&lt;br/&gt;+ getId(): Long&lt;br/&gt;+ setId(id: Long): void&lt;br/&gt;+ getKategorija(): String&lt;br/&gt;+ setKategorija(kategorija: String): void&lt;br/&gt;+ getZnesek(): BigDecimal&lt;br/&gt;+ setZnesek(znesek: BigDecimal): void&lt;br/&gt;+ getDatumZacetka(): LocalDate&lt;br/&gt;+ setDatumZacetka(datumZacetka: LocalDate): void&lt;br/&gt;+ getDatumKonca(): LocalDate&lt;br/&gt;+ setDatumKonca(datumKonca: LocalDate): void&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="180" width="340" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-18" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;ProracunPregled&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="160" width="200" x="810" y="-400" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-20" parent="4MUX10FxJa0AkUP26uzS-18" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;- id: Long&lt;br/&gt;- kategorija: String&lt;br/&gt;- znesek: BigDecimal&lt;br/&gt;- datumZacetka: LocalDate&lt;br/&gt;- datumKonca: LocalDate&lt;br/&gt;- poraba: BigDecimal&lt;br/&gt;- odstotekPorabe: BigDecimal&lt;br/&gt;- opozorilo: String&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="130" width="200" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-22" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;ProracunService&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="280" width="420" x="1040" y="-390" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-23" parent="4MUX10FxJa0AkUP26uzS-22" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;- proracunRepository: ProracunRepository&lt;br/&gt;- strosekRepository: StrosekRepository&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="50" width="420" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-24" parent="4MUX10FxJa0AkUP26uzS-22" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;+ ProracunService(proracunRepository: ProracunRepository,&lt;br/&gt;                  strosekRepository: StrosekRepository)&lt;br/&gt;- preveriPodatke(proracun: Proracun): void&lt;br/&gt;- preveriPrekrivanje(proracun: Proracun): void&lt;br/&gt;+ ustvariProracun(proracun: Proracun): Proracun&lt;br/&gt;+ pridobiVseProracune(): List&amp;lt;Proracun&amp;gt;&lt;br/&gt;+ urediProracun(id: Long, noviPodatki: Proracun): Proracun&lt;br/&gt;+ izbrisiProracun(id: Long): void&lt;br/&gt;+ izracunajPorabo(proracun: Proracun): BigDecimal&lt;br/&gt;+ izracunajOdstotekPorabe(proracun: Proracun): BigDecimal&lt;br/&gt;+ pridobiOpozorilo(proracun: Proracun): String&lt;br/&gt;+ pridobiPregledProracunov(): List&amp;lt;ProracunPregled&amp;gt;&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="200" width="420" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-26" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br/&gt;ProracunRepository&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="260" width="600" x="-10" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-27" parent="4MUX10FxJa0AkUP26uzS-26" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;+ existsByKategorijaAndDatumZacetkaLessThanEqualAndDatumKoncaGreaterThanEqual(&lt;br/&gt;    kategorija: String,&lt;br/&gt;    datumKonca: LocalDate,&lt;br/&gt;    datumZacetka: LocalDate&lt;br/&gt;): boolean&lt;br/&gt;&lt;br/&gt;+ existsByKategorijaAndDatumZacetkaLessThanEqualAndDatumKoncaGreaterThanEqualAndIdNot(&lt;br/&gt;    kategorija: String,&lt;br/&gt;    datumKonca: LocalDate,&lt;br/&gt;    datumZacetka: LocalDate,&lt;br/&gt;    id: Long&lt;br/&gt;): boolean&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="230" width="600" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-31" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;br/&gt;StrosekRepository&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="220" width="480" x="640" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-32" parent="4MUX10FxJa0AkUP26uzS-31" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;+ findByDatumBetween(od: LocalDate,&lt;br/&gt;                     doDatuma: LocalDate): List&amp;lt;Strosek&amp;gt;&lt;br/&gt;&lt;br/&gt;+ findByDatumBetweenAndKategorija(od: LocalDate,&lt;br/&gt;                                  doDatuma: LocalDate,&lt;br/&gt;                                  kategorija: String): List&amp;lt;Strosek&amp;gt;&lt;br/&gt;&lt;br/&gt;+ izracunajSkupnoPorabo(kategorija: String,&lt;br/&gt;                        od: LocalDate,&lt;br/&gt;                        doDatuma: LocalDate): BigDecimal&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="190" width="480" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-35" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;ProracunController&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="170" width="390" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-36" parent="4MUX10FxJa0AkUP26uzS-35" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;- service: ProracunService&lt;br/&gt;&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="30" width="390" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-37" parent="4MUX10FxJa0AkUP26uzS-35" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;+ ProracunController(service: ProracunService)&lt;br/&gt;+ vsiProracuni(): List&amp;lt;ProracunPregled&amp;gt;&lt;br/&gt;+ dodajProracun(proracun: Proracun): Proracun&lt;br/&gt;+ posodobiProracun(id: Long, podatki: Proracun): Proracun&lt;br/&gt;+ izbrisiProracun(id: Long): void&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="110" width="390" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-40" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;StrosekController&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="260" width="450" x="470" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-41" parent="4MUX10FxJa0AkUP26uzS-40" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;- repository: StrosekRepository&lt;br/&gt;&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="30" width="450" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-42" parent="4MUX10FxJa0AkUP26uzS-40" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;+ StrosekController(repository: StrosekRepository)&lt;br/&gt;+ vsiStroski(): List&amp;lt;Strosek&amp;gt;&lt;br/&gt;+ enStrosek(id: Long): Strosek&lt;br/&gt;+ dodajStrosek(strosek: Strosek): Strosek&lt;br/&gt;+ posodobiStrosek(id: Long, podatki: Strosek): Strosek&lt;br/&gt;+ izbrisiStrosek(id: Long): void&lt;br/&gt;+ analizaStroskov(od: LocalDate,&lt;br/&gt;                  doDatuma: LocalDate,&lt;br/&gt;                  kategorija: String): Map&amp;lt;String, Object&amp;gt;&lt;br/&gt;+ izvoziPdf(od: LocalDate,&lt;br/&gt;            doDatuma: LocalDate,&lt;br/&gt;            kategorija: String): ResponseEntity&amp;lt;ByteArrayResource&amp;gt;&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="200" width="450" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-44" parent="1" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" value="&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;BackendApplication&lt;br/&gt;&lt;/code&gt;&lt;/pre&gt;" vertex="1">
+          <mxGeometry height="60" width="220" x="980" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="4MUX10FxJa0AkUP26uzS-45" parent="4MUX10FxJa0AkUP26uzS-44" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;+ main(args: String[]): void&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="30" width="220" y="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

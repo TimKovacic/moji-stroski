@@ -8,22 +8,23 @@ Spletna aplikacija za beleženje, pregledovanje, urejanje in analiziranje osebni
 
 1.  [Sodelujoči](#sodelujoči)
 2.  [O projektu](#o-projektu)
-3.  [Vizija projekta](#vizija-projekta)
+3. [Besednjak](#besednjak)
+4.  [Vizija projekta](#vizija-projekta)
     -   [Opis rešitve](#opis-rešitve)
     -   [Ključne funkcionalnosti](#ključne-funkcionalnosti)
     -   [Obseg rešitve in morebitne
         omejitve](#obseg-rešitve-in-morebitne-omejitve)
-4.  [Uporabljene tehnologije](#uporabljene-tehnologije)
-5.  [Struktura projekta](#struktura-projekta)
-6.  [Zahteve za namestitev](#zahteve-za-namestitev)
-7.  [Namestitev in zagon](#namestitev-in-zagon)
-8.  [Funkcionalnosti aplikacije](#funkcionalnosti-aplikacije)
-9.  [API-endpointi](#api-endpointi)
-10. [Navodila za razvijalce](#navodila-za-razvijalce)
-11. [Standardi kodiranja](#standardi-kodiranja)
-12. [Besednjak](#besednjak)
+5.  [Uporabljene tehnologije](#uporabljene-tehnologije)
+6.  [Struktura projekta](#struktura-projekta)
+7.  [Zahteve za namestitev](#zahteve-za-namestitev)
+8.  [Namestitev in zagon](#namestitev-in-zagon)
+9.  [Funkcionalnosti aplikacije](#funkcionalnosti-aplikacije)
+10.  [API-endpointi](#api-endpointi)
+11. [Navodila za razvijalce](#navodila-za-razvijalce)
+12. [Standardi kodiranja](#standardi-kodiranja)
 13. [Diagram primerov uporabe](#diagram-primerov-uporabe)
 14. [Podrobni opisi neimplementiranih primerov uporabe](#podrobni-opisi-neimplementiranih-primerov-uporabe)
+15. [Razredni diagram](#razredni-diagram)
 
 - [Uporabniške zgodbe in kriteriji sprejemljivosti](docs/user-stories.md)
 
@@ -49,6 +50,17 @@ Aplikacija je sestavljena iz treh glavnih delov:
 - **Backend:** strežniški del (REST API), izdelan s Spring Boot.
 - **Podatkovna baza:** PostgreSQL, ki shranjuje podatke o stroških in teče v Docker vsebniku.
 
+## Besednjak
+| Pojem | Razlaga | Primer uporabe |
+| :--- | :--- | :--- |
+| Osebni strošek | Primarni uporabljeni objekt. Predstavlja porabo denarja uporabnika v realnem svetu. | 5€ za kavo je osebni strošek. |
+| Uporabnik | Oseba, kateri je aplikacija namaenjena in jo tudi uporablja. | Uporabnik lahko spremlja svoje stroške. |
+| Izdatek | Strošek, denar, ki je bil porabljen. | Izdatek za račun je znašal 22,50€ |
+| Časovno obdobje | Opcija med filtri prikazanih stroškov, ki omejuje prikaz glede na izbrana datuma. | Časovno obdobje: med 1. 11. 2026 in 30. 11. 2026 |
+| Kategorija stroška | Atribut stroška, ki opisuje za kakšno vrsto stroška gre. | Hrana, Prevoz, Stanovanje, Prosti čas, Zdravje, Drugo |
+| Datum | Časovni okvir, natančen na dan. | `1. 11. 2026` pomeni prvi november leta 2026 |
+| Filter | Orodje za omejevanje izpisov na spletni aplikaciji. | Filter lahko omeji stroške po datumu ali kategoriji. |
+| Skupna poraba | Skupni seštevek izdatkov v določenem časovnem obdobju ali po drugih filtrih | Skupna poraba za mesec oktober je: `546,22€` |
 
 ## Vizija projekta
 
@@ -568,18 +580,6 @@ Pri razvoju projekta upoštevamo naslednje standarde:
 - Gesel, ključev in drugih občutljivih podatkov ne objavljamo v GitHub repozitoriju.
 - Pred oddajo sprememb preverimo delovanje aplikacije.
 
-## Besednjak
-| Pojem | Razlaga | Primer uporabe |
-| :--- | :--- | :--- |
-| Osebni strošek | Primarni uporabljeni objekt. Predstavlja porabo denarja uporabnika v realnem svetu. | 5€ za kavo je osebni strošek. |
-| Uporabnik | Oseba, kateri je aplikacija namaenjena in jo tudi uporablja. | Uporabnik lahko spremlja svoje stroške. |
-| Izdatek | Strošek, denar, ki je bil porabljen. | Izdatek za račun je znašal 22,50€ |
-| Časovno obdobje | Opcija med filtri prikazanih stroškov, ki omejuje prikaz glede na izbrana datuma. | Časovno obdobje: med 1. 11. 2026 in 30. 11. 2026 |
-| Kategorija stroška | Atribut stroška, ki opisuje za kakšno vrsto stroška gre. | Hrana, Prevoz, Stanovanje, Prosti čas, Zdravje, Drugo |
-| Datum | Časovni okvir, natančen na dan. | `1. 11. 2026` pomeni prvi november leta 2026 |
-| Filter | Orodje za omejevanje izpisov na spletni aplikaciji. | Filter lahko omeji stroške po datumu ali kategoriji. |
-| Skupna poraba | Skupni seštevek izdatkov v določenem časovnem obdobju ali po drugih filtrih | Skupna poraba za mesec oktober je: `546,22€` |
-
 ## Diagram primerov uporabe
 ![Diagram primerov uporabe](DPU/DPU.png)
 
@@ -719,3 +719,6 @@ V tem dokumentu so podrobno opisani primeri uporabe, ki v trenutni različici ap
 **Izjeme:**
 **Napaka pri izbiri uporabnika** Poizvedba uporabnikovih podatkov je neuspešna.
 **Napaka pri shranjevanju nasveta v bazo:** Ustvarjen nasvet se ne shrani v bazo podatkov in posledično tudi ne prikaže na uporabnikovi strani.
+
+
+## Razredni diagram
