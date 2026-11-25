@@ -46,6 +46,7 @@ Kot uporabnik želim za izbrano kategorijo stroškov določiti najvišji dovolje
 - `ProracunRepository.java` – dostop do podatkovne baze.
 - `ProracunService.java` – poslovna logika, validacija in izračun porabe.
 - `ProracunController.java` – API za upravljanje proračunov.
+- `ProracunPregled.java` - priprava objekta, ki ga backend vrne frontendu
 
 Backend bo omogočal ustvarjanje, pregledovanje, urejanje in brisanje proračunov. Preverjal bo tudi veljavnost podatkov in preprečeval prekrivanje časovnih obdobij za isto kategorijo. Pri urejanju obstoječega proračuna ne bo upošteval prekrivanja z njim samim.
 
