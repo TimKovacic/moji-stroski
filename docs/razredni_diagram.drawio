@@ -1,0 +1,505 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Razredni diagram" id="razredni-diagram">
+    <mxGraphModel dx="2400" dy="2000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="2600" pageHeight="2000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="JpaRepository" value="«interface»&lt;br&gt;&lt;b&gt;JpaRepository&amp;lt;T, ID&amp;gt;&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="1360" width="250" height="143" as="geometry" />
+        </mxCell>
+        <mxCell id="JpaRepository-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ save(entiteta: T): T&lt;br&gt;+ findById(id: ID): Optional&amp;lt;T&amp;gt;&lt;br&gt;+ findAll(): List&amp;lt;T&amp;gt;&lt;br&gt;+ existsById(id: ID): boolean&lt;br&gt;+ deleteById(id: ID): void&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="JpaRepository">
+          <mxGeometry y="44" width="250" height="99" as="geometry" />
+        </mxCell>
+        <mxCell id="StrosekController" value="&lt;b&gt;StrosekController&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="960" y="0" width="480" height="333" as="geometry" />
+        </mxCell>
+        <mxCell id="StrosekController-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;- repository: StrosekRepository&lt;br&gt;- prijavaService: PrijavaService&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="StrosekController">
+          <mxGeometry y="30" width="480" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="StrosekController-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="StrosekController">
+          <mxGeometry y="84" width="480" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="StrosekController-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ StrosekController(repository: StrosekRepository,&lt;br&gt;                    prijavaService: PrijavaService)&lt;br&gt;- pridobiLastniStrosek(id: Long, uporabnik: Uporabnik): Strosek&lt;br&gt;+ vsiStroski(seja: HttpSession): List&amp;lt;Strosek&amp;gt;&lt;br&gt;+ enStrosek(id: Long, seja: HttpSession): Strosek&lt;br&gt;+ dodajStrosek(strosek: Strosek, seja: HttpSession): Strosek&lt;br&gt;+ posodobiStrosek(id: Long, podatki: Strosek,&lt;br&gt;                  seja: HttpSession): Strosek&lt;br&gt;+ izbrisiStrosek(id: Long, seja: HttpSession): void&lt;br&gt;+ analizaStroskov(od: LocalDate, doDatuma: LocalDate,&lt;br&gt;                  kategorija: String,&lt;br&gt;                  seja: HttpSession): Map&amp;lt;String, Object&amp;gt;&lt;br&gt;+ izvoziPdf(od: LocalDate, doDatuma: LocalDate,&lt;br&gt;            kategorija: String, seja: HttpSession)&lt;br&gt;            : ResponseEntity&amp;lt;ByteArrayResource&amp;gt;&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="StrosekController">
+          <mxGeometry y="84" width="480" height="249" as="geometry" />
+        </mxCell>
+        <mxCell id="ProracunController" value="&lt;b&gt;ProracunController&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="430" y="0" width="430" height="228" as="geometry" />
+        </mxCell>
+        <mxCell id="ProracunController-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;- service: ProracunService&lt;br&gt;- prijavaService: PrijavaService&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="ProracunController">
+          <mxGeometry y="30" width="430" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="ProracunController-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="ProracunController">
+          <mxGeometry y="84" width="430" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ProracunController-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ ProracunController(service: ProracunService,&lt;br&gt;                     prijavaService: PrijavaService)&lt;br&gt;+ vsiProracuni(seja: HttpSession): List&amp;lt;ProracunPregled&amp;gt;&lt;br&gt;+ dodajProracun(proracun: Proracun,&lt;br&gt;                seja: HttpSession): Proracun&lt;br&gt;+ posodobiProracun(id: Long, podatki: Proracun,&lt;br&gt;                   seja: HttpSession): Proracun&lt;br&gt;+ izbrisiProracun(id: Long, seja: HttpSession): void&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="ProracunController">
+          <mxGeometry y="84" width="430" height="144" as="geometry" />
+        </mxCell>
+        <mxCell id="NasvetController" value="&lt;b&gt;NasvetController&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1540" y="0" width="460" height="258" as="geometry" />
+        </mxCell>
+        <mxCell id="NasvetController-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;- service: NasvetService&lt;br&gt;- prijavaService: PrijavaService&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="NasvetController">
+          <mxGeometry y="30" width="460" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="NasvetController-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="NasvetController">
+          <mxGeometry y="84" width="460" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NasvetController-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ NasvetController(service: NasvetService,&lt;br&gt;                   prijavaService: PrijavaService)&lt;br&gt;+ mojeStranke(seja: HttpSession): List&amp;lt;Uporabnik&amp;gt;&lt;br&gt;+ dodajStranko(email: String, seja: HttpSession): Uporabnik&lt;br&gt;+ stroskiStranke(uporabnikId: Long,&lt;br&gt;                 seja: HttpSession): List&amp;lt;Strosek&amp;gt;&lt;br&gt;+ dodajNasvet(uporabnikId: Long, nasvet: Nasvet,&lt;br&gt;              seja: HttpSession): Nasvet&lt;br&gt;+ mojiNasveti(seja: HttpSession): List&amp;lt;Nasvet&amp;gt;&lt;br&gt;+ izbrisiNasvet(id: Long, seja: HttpSession): void&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="NasvetController">
+          <mxGeometry y="84" width="460" height="174" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavaController" value="&lt;b&gt;PrijavaController&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="2100" y="0" width="420" height="183" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavaController-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;- service: PrijavaService&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="PrijavaController">
+          <mxGeometry y="30" width="420" height="39" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavaController-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="PrijavaController">
+          <mxGeometry y="69" width="420" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavaController-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ PrijavaController(service: PrijavaService)&lt;br&gt;+ registracija(uporabnik: Uporabnik): PrijavljenaOseba&lt;br&gt;+ prijava(zahteva: PrijavaZahteva,&lt;br&gt;          seja: HttpSession): PrijavljenaOseba&lt;br&gt;+ odjava(seja: HttpSession): void&lt;br&gt;+ trenutnaOseba(seja: HttpSession): PrijavljenaOseba&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="PrijavaController">
+          <mxGeometry y="69" width="420" height="114" as="geometry" />
+        </mxCell>
+        <mxCell id="BackendApplication" value="&lt;b&gt;BackendApplication&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="2640" y="560" width="230" height="69" as="geometry" />
+        </mxCell>
+        <mxCell id="BackendApplication-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ main(args: String[]): void&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="BackendApplication">
+          <mxGeometry y="30" width="230" height="39" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavaZahteva" value="&lt;b&gt;PrijavaZahteva&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="2640" y="0" width="170" height="138" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavaZahteva-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;- email: String&lt;br&gt;- geslo: String&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="PrijavaZahteva">
+          <mxGeometry y="30" width="170" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavaZahteva-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="PrijavaZahteva">
+          <mxGeometry y="84" width="170" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavaZahteva-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ getEmail(): String&lt;br&gt;+ getGeslo(): String&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="PrijavaZahteva">
+          <mxGeometry y="84" width="170" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavljenaOseba" value="&lt;b&gt;PrijavljenaOseba&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="2640" y="190" width="260" height="243" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavljenaOseba-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;- id: Long&lt;br&gt;- ime: String&lt;br&gt;- priimek: String&lt;br&gt;- email: String&lt;br&gt;- vloga: Vloga&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="PrijavljenaOseba">
+          <mxGeometry y="30" width="260" height="99" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavljenaOseba-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="PrijavljenaOseba">
+          <mxGeometry y="129" width="260" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavljenaOseba-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ PrijavljenaOseba(oseba: Oseba)&lt;br&gt;+ getId(): Long&lt;br&gt;+ getIme(): String&lt;br&gt;+ getPriimek(): String&lt;br&gt;+ getEmail(): String&lt;br&gt;+ getVloga(): Vloga&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="PrijavljenaOseba">
+          <mxGeometry y="129" width="260" height="114" as="geometry" />
+        </mxCell>
+        <mxCell id="ProracunPregled" value="&lt;b&gt;ProracunPregled&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="0" y="520" width="350" height="378" as="geometry" />
+        </mxCell>
+        <mxCell id="ProracunPregled-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;- id: Long&lt;br&gt;- kategorija: String&lt;br&gt;- znesek: BigDecimal&lt;br&gt;- datumZacetka: LocalDate&lt;br&gt;- datumKonca: LocalDate&lt;br&gt;- poraba: BigDecimal&lt;br&gt;- odstotekPorabe: BigDecimal&lt;br&gt;- opozorilo: String&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="ProracunPregled">
+          <mxGeometry y="30" width="350" height="144" as="geometry" />
+        </mxCell>
+        <mxCell id="ProracunPregled-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="ProracunPregled">
+          <mxGeometry y="174" width="350" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ProracunPregled-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ ProracunPregled(proracun: Proracun,&lt;br&gt;                  poraba: BigDecimal,&lt;br&gt;                  odstotekPorabe: BigDecimal,&lt;br&gt;                  opozorilo: String)&lt;br&gt;+ getId(): Long&lt;br&gt;+ getKategorija(): String&lt;br&gt;+ getZnesek(): BigDecimal&lt;br&gt;+ getDatumZacetka(): LocalDate&lt;br&gt;+ getDatumKonca(): LocalDate&lt;br&gt;+ getPoraba(): BigDecimal&lt;br&gt;+ getOdstotekPorabe(): BigDecimal&lt;br&gt;+ getOpozorilo(): String&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="ProracunPregled">
+          <mxGeometry y="174" width="350" height="204" as="geometry" />
+        </mxCell>
+        <mxCell id="ProracunService" value="&lt;b&gt;ProracunService&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="430" y="520" width="440" height="348" as="geometry" />
+        </mxCell>
+        <mxCell id="ProracunService-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;- proracunRepository: ProracunRepository&lt;br&gt;- strosekRepository: StrosekRepository&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="ProracunService">
+          <mxGeometry y="30" width="440" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="ProracunService-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="ProracunService">
+          <mxGeometry y="84" width="440" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ProracunService-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ ProracunService(proracunRepository: ProracunRepository,&lt;br&gt;                  strosekRepository: StrosekRepository)&lt;br&gt;- preveriPodatke(proracun: Proracun): void&lt;br&gt;- preveriPrekrivanje(proracun: Proracun): void&lt;br&gt;- pridobiLastniProracun(id: Long,&lt;br&gt;                        uporabnik: Uporabnik): Proracun&lt;br&gt;+ ustvariProracun(proracun: Proracun,&lt;br&gt;                  uporabnik: Uporabnik): Proracun&lt;br&gt;+ urediProracun(id: Long, noviPodatki: Proracun,&lt;br&gt;                uporabnik: Uporabnik): Proracun&lt;br&gt;+ izbrisiProracun(id: Long, uporabnik: Uporabnik): void&lt;br&gt;+ izracunajPorabo(proracun: Proracun): BigDecimal&lt;br&gt;+ izracunajOdstotekPorabe(proracun: Proracun): BigDecimal&lt;br&gt;+ pridobiOpozorilo(proracun: Proracun): String&lt;br&gt;+ pridobiPregledProracunov(&lt;br&gt;    uporabnik: Uporabnik): List&amp;lt;ProracunPregled&amp;gt;&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="ProracunService">
+          <mxGeometry y="84" width="440" height="264" as="geometry" />
+        </mxCell>
+        <mxCell id="NasvetService" value="&lt;b&gt;NasvetService&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1540" y="520" width="450" height="393" as="geometry" />
+        </mxCell>
+        <mxCell id="NasvetService-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;- nasvetRepository: NasvetRepository&lt;br&gt;- uporabnikRepository: UporabnikRepository&lt;br&gt;- strosekRepository: StrosekRepository&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="NasvetService">
+          <mxGeometry y="30" width="450" height="69" as="geometry" />
+        </mxCell>
+        <mxCell id="NasvetService-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="NasvetService">
+          <mxGeometry y="99" width="450" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NasvetService-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ NasvetService(nasvetRepository: NasvetRepository,&lt;br&gt;                uporabnikRepository: UporabnikRepository,&lt;br&gt;                strosekRepository: StrosekRepository)&lt;br&gt;- preveriPodatke(nasvet: Nasvet): void&lt;br&gt;- pridobiStranko(svetovalec: FinancniSvetovalec,&lt;br&gt;                 uporabnikId: Long): Uporabnik&lt;br&gt;+ pridobiStranke(svetovalec: FinancniSvetovalec)&lt;br&gt;                 : List&amp;lt;Uporabnik&amp;gt;&lt;br&gt;+ dodajStranko(svetovalec: FinancniSvetovalec,&lt;br&gt;               email: String): Uporabnik&lt;br&gt;+ pridobiStroskeStranke(svetovalec: FinancniSvetovalec,&lt;br&gt;                        uporabnikId: Long): List&amp;lt;Strosek&amp;gt;&lt;br&gt;+ ustvariNasvet(svetovalec: FinancniSvetovalec,&lt;br&gt;                uporabnikId: Long, nasvet: Nasvet): Nasvet&lt;br&gt;+ pridobiNasveteUporabnika(uporabnik: Uporabnik)&lt;br&gt;                           : List&amp;lt;Nasvet&amp;gt;&lt;br&gt;+ izbrisiNasvet(svetovalec: FinancniSvetovalec,&lt;br&gt;                id: Long): void&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="NasvetService">
+          <mxGeometry y="99" width="450" height="294" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavaService" value="&lt;b&gt;PrijavaService&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="2100" y="520" width="430" height="258" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavaService-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;- osebaRepository: OsebaRepository&lt;br&gt;- kodirnikGesel: PasswordEncoder&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="PrijavaService">
+          <mxGeometry y="30" width="430" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavaService-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="PrijavaService">
+          <mxGeometry y="84" width="430" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="PrijavaService-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ PrijavaService(osebaRepository: OsebaRepository,&lt;br&gt;                 kodirnikGesel: PasswordEncoder)&lt;br&gt;- preveriPodatkeRegistracije(uporabnik: Uporabnik): void&lt;br&gt;+ registracija(uporabnik: Uporabnik): Uporabnik&lt;br&gt;+ prijava(email: String, geslo: String): Oseba&lt;br&gt;+ pridobiPrijavljenoOsebo(seja: HttpSession): Oseba&lt;br&gt;+ pridobiPrijavljenegaUporabnika(&lt;br&gt;    seja: HttpSession): Uporabnik&lt;br&gt;+ pridobiPrijavljenegaSvetovalca(&lt;br&gt;    seja: HttpSession): FinancniSvetovalec&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="PrijavaService">
+          <mxGeometry y="84" width="430" height="174" as="geometry" />
+        </mxCell>
+        <mxCell id="StrosekRepository" value="«interface»&lt;br&gt;&lt;b&gt;StrosekRepository&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="960" y="1010" width="460" height="203" as="geometry" />
+        </mxCell>
+        <mxCell id="StrosekRepository-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ findByUporabnikId(uporabnikId: Long): List&amp;lt;Strosek&amp;gt;&lt;br&gt;+ findByUporabnikIdAndDatumBetween(uporabnikId: Long,&lt;br&gt;    od: LocalDate, doDatuma: LocalDate): List&amp;lt;Strosek&amp;gt;&lt;br&gt;+ findByUporabnikIdAndDatumBetweenAndKategorija(&lt;br&gt;    uporabnikId: Long, od: LocalDate,&lt;br&gt;    doDatuma: LocalDate, kategorija: String): List&amp;lt;Strosek&amp;gt;&lt;br&gt;+ izracunajSkupnoPorabo(uporabnikId: Long,&lt;br&gt;    kategorija: String, od: LocalDate,&lt;br&gt;    doDatuma: LocalDate): BigDecimal&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="StrosekRepository">
+          <mxGeometry y="44" width="460" height="159" as="geometry" />
+        </mxCell>
+        <mxCell id="ProracunRepository" value="«interface»&lt;br&gt;&lt;b&gt;ProracunRepository&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="430" y="1010" width="420" height="263" as="geometry" />
+        </mxCell>
+        <mxCell id="ProracunRepository-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ findByUporabnikId(uporabnikId: Long): List&amp;lt;Proracun&amp;gt;&lt;br&gt;+ existsByUporabnikIdAndKategorija&lt;br&gt;      AndDatumZacetkaLessThanEqual&lt;br&gt;      AndDatumKoncaGreaterThanEqual(&lt;br&gt;    uporabnikId: Long, kategorija: String,&lt;br&gt;    datumKonca: LocalDate,&lt;br&gt;    datumZacetka: LocalDate): boolean&lt;br&gt;+ existsByUporabnikIdAndKategorija&lt;br&gt;      AndDatumZacetkaLessThanEqual&lt;br&gt;      AndDatumKoncaGreaterThanEqualAndIdNot(&lt;br&gt;    uporabnikId: Long, kategorija: String,&lt;br&gt;    datumKonca: LocalDate,&lt;br&gt;    datumZacetka: LocalDate, id: Long): boolean&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="ProracunRepository">
+          <mxGeometry y="44" width="420" height="219" as="geometry" />
+        </mxCell>
+        <mxCell id="NasvetRepository" value="«interface»&lt;br&gt;&lt;b&gt;NasvetRepository&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="1010" width="370" height="98" as="geometry" />
+        </mxCell>
+        <mxCell id="NasvetRepository-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ findByUporabnikIdOrderByDatumUstvarjanjaDesc(&lt;br&gt;    uporabnikId: Long): List&amp;lt;Nasvet&amp;gt;&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="NasvetRepository">
+          <mxGeometry y="44" width="370" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="UporabnikRepository" value="«interface»&lt;br&gt;&lt;b&gt;UporabnikRepository&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1930" y="1010" width="440" height="98" as="geometry" />
+        </mxCell>
+        <mxCell id="UporabnikRepository-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ findByEmail(email: String): Optional&amp;lt;Uporabnik&amp;gt;&lt;br&gt;+ findBySvetovalecId(svetovalecId: Long): List&amp;lt;Uporabnik&amp;gt;&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="UporabnikRepository">
+          <mxGeometry y="44" width="440" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="OsebaRepository" value="«interface»&lt;br&gt;&lt;b&gt;OsebaRepository&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="2450" y="1010" width="350" height="98" as="geometry" />
+        </mxCell>
+        <mxCell id="OsebaRepository-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ findByEmail(email: String): Optional&amp;lt;Oseba&amp;gt;&lt;br&gt;+ existsByEmail(email: String): boolean&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="OsebaRepository">
+          <mxGeometry y="44" width="350" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="Proracun" value="&lt;b&gt;Proracun&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1600" width="380" height="363" as="geometry" />
+        </mxCell>
+        <mxCell id="Proracun-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;- id: Long&lt;br&gt;- kategorija: String&lt;br&gt;- znesek: BigDecimal&lt;br&gt;- datumZacetka: LocalDate&lt;br&gt;- datumKonca: LocalDate&lt;br&gt;- uporabnik: Uporabnik&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="Proracun">
+          <mxGeometry y="30" width="380" height="114" as="geometry" />
+        </mxCell>
+        <mxCell id="Proracun-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="Proracun">
+          <mxGeometry y="144" width="380" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Proracun-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ Proracun()&lt;br&gt;+ getId(): Long&lt;br&gt;+ setId(id: Long): void&lt;br&gt;+ getKategorija(): String&lt;br&gt;+ setKategorija(kategorija: String): void&lt;br&gt;+ getZnesek(): BigDecimal&lt;br&gt;+ setZnesek(znesek: BigDecimal): void&lt;br&gt;+ getDatumZacetka(): LocalDate&lt;br&gt;+ setDatumZacetka(datumZacetka: LocalDate): void&lt;br&gt;+ getDatumKonca(): LocalDate&lt;br&gt;+ setDatumKonca(datumKonca: LocalDate): void&lt;br&gt;+ getUporabnik(): Uporabnik&lt;br&gt;+ setUporabnik(uporabnik: Uporabnik): void&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="Proracun">
+          <mxGeometry y="144" width="380" height="219" as="geometry" />
+        </mxCell>
+        <mxCell id="Strosek" value="&lt;b&gt;Strosek&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="460" y="1600" width="330" height="378" as="geometry" />
+        </mxCell>
+        <mxCell id="Strosek-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;- id: Long&lt;br&gt;- opis: String&lt;br&gt;- znesek: BigDecimal&lt;br&gt;- kategorija: String&lt;br&gt;- datum: LocalDate&lt;br&gt;- uporabnik: Uporabnik&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="Strosek">
+          <mxGeometry y="30" width="330" height="114" as="geometry" />
+        </mxCell>
+        <mxCell id="Strosek-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="Strosek">
+          <mxGeometry y="144" width="330" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Strosek-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ Strosek()&lt;br&gt;+ Strosek(opis, znesek, kategorija, datum)&lt;br&gt;+ getId(): Long&lt;br&gt;+ getOpis(): String&lt;br&gt;+ getZnesek(): BigDecimal&lt;br&gt;+ getKategorija(): String&lt;br&gt;+ getDatum(): LocalDate&lt;br&gt;+ getUporabnik(): Uporabnik&lt;br&gt;+ setId(id: Long): void&lt;br&gt;+ setOpis(opis: String): void&lt;br&gt;+ setZnesek(znesek: BigDecimal): void&lt;br&gt;+ setKategorija(kategorija: String): void&lt;br&gt;+ setDatum(datum: LocalDate): void&lt;br&gt;+ setUporabnik(uporabnik: Uporabnik): void&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="Strosek">
+          <mxGeometry y="144" width="330" height="234" as="geometry" />
+        </mxCell>
+        <mxCell id="Oseba" value="«abstract»&lt;br&gt;&lt;i&gt;&lt;b&gt;Oseba&lt;/b&gt;&lt;/i&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="1600" width="280" height="317" as="geometry" />
+        </mxCell>
+        <mxCell id="Oseba-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;# id: Long&lt;br&gt;# ime: String&lt;br&gt;# priimek: String&lt;br&gt;# email: String&lt;br&gt;# geslo: String&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="Oseba">
+          <mxGeometry y="44" width="280" height="99" as="geometry" />
+        </mxCell>
+        <mxCell id="Oseba-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="Oseba">
+          <mxGeometry y="143" width="280" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Oseba-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ getId(): Long&lt;br&gt;+ getIme(): String&lt;br&gt;+ getPriimek(): String&lt;br&gt;+ getEmail(): String&lt;br&gt;+ getGeslo(): String&lt;br&gt;+ setIme(ime: String): void&lt;br&gt;+ setPriimek(priimek: String): void&lt;br&gt;+ setEmail(email: String): void&lt;br&gt;+ setGeslo(geslo: String): void&lt;br&gt;+ getVloga(): Vloga {abstract}&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="Oseba">
+          <mxGeometry y="143" width="280" height="174" as="geometry" />
+        </mxCell>
+        <mxCell id="Vloga" value="«enumeration»&lt;br&gt;&lt;b&gt;Vloga&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1600" y="1600" width="130" height="98" as="geometry" />
+        </mxCell>
+        <mxCell id="Vloga-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;UPORABNIK&lt;br&gt;SVETOVALEC&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="Vloga">
+          <mxGeometry y="44" width="130" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="Uporabnik" value="&lt;b&gt;Uporabnik&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="900" y="2040" width="410" height="153" as="geometry" />
+        </mxCell>
+        <mxCell id="Uporabnik-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;- svetovalec: FinancniSvetovalec&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="Uporabnik">
+          <mxGeometry y="30" width="410" height="39" as="geometry" />
+        </mxCell>
+        <mxCell id="Uporabnik-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="Uporabnik">
+          <mxGeometry y="69" width="410" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Uporabnik-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ Uporabnik()&lt;br&gt;+ getSvetovalec(): FinancniSvetovalec&lt;br&gt;+ setSvetovalec(svetovalec: FinancniSvetovalec): void&lt;br&gt;+ getVloga(): Vloga&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="Uporabnik">
+          <mxGeometry y="69" width="410" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="FinancniSvetovalec" value="&lt;b&gt;FinancniSvetovalec&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1450" y="2040" width="190" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="FinancniSvetovalec-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ FinancniSvetovalec()&lt;br&gt;+ getVloga(): Vloga&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="FinancniSvetovalec">
+          <mxGeometry y="30" width="190" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="Nasvet" value="&lt;b&gt;Nasvet&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1900" y="1600" width="410" height="348" as="geometry" />
+        </mxCell>
+        <mxCell id="Nasvet-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;- id: Long&lt;br&gt;- vsebina: String&lt;br&gt;- pomembnost: Pomembnost&lt;br&gt;- datumUstvarjanja: LocalDateTime&lt;br&gt;- uporabnik: Uporabnik&lt;br&gt;- svetovalec: FinancniSvetovalec&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="Nasvet">
+          <mxGeometry y="30" width="410" height="114" as="geometry" />
+        </mxCell>
+        <mxCell id="Nasvet-sep" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="Nasvet">
+          <mxGeometry y="144" width="410" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Nasvet-methods" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;+ Nasvet()&lt;br&gt;+ getId(): Long&lt;br&gt;+ getVsebina(): String&lt;br&gt;+ getPomembnost(): Pomembnost&lt;br&gt;+ getDatumUstvarjanja(): LocalDateTime&lt;br&gt;+ getUporabnik(): Uporabnik&lt;br&gt;+ getSvetovalec(): FinancniSvetovalec&lt;br&gt;+ setVsebina(vsebina: String): void&lt;br&gt;+ setPomembnost(pomembnost: Pomembnost): void&lt;br&gt;+ setDatumUstvarjanja(datum: LocalDateTime): void&lt;br&gt;+ setUporabnik(uporabnik: Uporabnik): void&lt;br&gt;+ setSvetovalec(svetovalec: FinancniSvetovalec): void&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="Nasvet">
+          <mxGeometry y="144" width="410" height="204" as="geometry" />
+        </mxCell>
+        <mxCell id="Pomembnost" value="«enumeration»&lt;br&gt;&lt;b&gt;Pomembnost&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=44;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontFamily=Courier New;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="2400" y="1600" width="130" height="113" as="geometry" />
+        </mxCell>
+        <mxCell id="Pomembnost-attrs" value="&lt;pre style=&quot;margin:0;font-family:Courier New,monospace;font-size:12px;line-height:15px;&quot;&gt;NIZKA&lt;br&gt;SREDNJA&lt;br&gt;VISOKA&lt;/pre&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=6;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="Pomembnost">
+          <mxGeometry y="44" width="130" height="69" as="geometry" />
+        </mxCell>
+        <mxCell id="e1-ProracunController-ProracunService" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.5116;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5000;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ProracunController" target="ProracunService">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e1-ProracunController-ProracunService-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e1-ProracunController-ProracunService">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="10" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e2-StrosekController-StrosekRepository" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.2917;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.3043;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="StrosekController" target="StrosekRepository">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e2-StrosekController-StrosekRepository-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e2-StrosekController-StrosekRepository">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="10" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e3-NasvetController-NasvetService" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.3478;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.3556;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="NasvetController" target="NasvetService">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3-NasvetController-NasvetService-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e3-NasvetController-NasvetService">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="10" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e4-PrijavaController-PrijavaService" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.7143;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.6977;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="PrijavaController" target="PrijavaService">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4-PrijavaController-PrijavaService-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e4-PrijavaController-PrijavaService">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="10" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e5-ProracunController-PrijavaService" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.7674;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.1163;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ProracunController" target="PrijavaService">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="760" y="470" /><mxPoint x="2150" y="470" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5-ProracunController-PrijavaService-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e5-ProracunController-PrijavaService">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="10" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e6-StrosekController-PrijavaService" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.8125;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.2791;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="StrosekController" target="PrijavaService">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1350" y="420" /><mxPoint x="2220" y="420" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6-StrosekController-PrijavaService-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e6-StrosekController-PrijavaService">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="10" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e7-NasvetController-PrijavaService" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.7826;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.4419;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="NasvetController" target="PrijavaService">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1900" y="370" /><mxPoint x="2290" y="370" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7-NasvetController-PrijavaService-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e7-NasvetController-PrijavaService">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="10" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e8-PrijavaController-PrijavaZahteva" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;dashed=1;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=1.0000;exitY=0.3279;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.0000;entryY=0.4348;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="PrijavaController" target="PrijavaZahteva">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8-PrijavaController-PrijavaZahteva-l0" value="«use»" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e8-PrijavaController-PrijavaZahteva">
+          <mxGeometry x="0" relative="1" as="geometry"><mxPoint x="0" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e9-PrijavaController-PrijavljenaOseba" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;dashed=1;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=1.0000;exitY=0.8197;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.0000;entryY=0.3704;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="PrijavaController" target="PrijavljenaOseba">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="2580" y="150" /><mxPoint x="2580" y="280" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9-PrijavaController-PrijavljenaOseba-l0" value="«create»" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e9-PrijavaController-PrijavljenaOseba">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="-32" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e10-ProracunService-ProracunPregled" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;dashed=1;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.0000;exitY=0.2299;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.0000;entryY=0.2116;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ProracunService" target="ProracunPregled">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10-ProracunService-ProracunPregled-l0" value="«create»" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e10-ProracunService-ProracunPregled">
+          <mxGeometry x="0" relative="1" as="geometry"><mxPoint x="0" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e11-ProracunPregled-Proracun" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;dashed=1;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.5000;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.4605;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ProracunPregled" target="Proracun">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e11-ProracunPregled-Proracun-l0" value="«use»" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e11-ProracunPregled-Proracun">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="26" y="-14" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e12-ProracunService-ProracunRepository" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.4773;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5000;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ProracunService" target="ProracunRepository">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e12-ProracunService-ProracunRepository-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e12-ProracunService-ProracunRepository">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="10" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e13-ProracunService-StrosekRepository" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=1.0000;exitY=0.8621;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.1957;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ProracunService" target="StrosekRepository">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1050" y="820" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e13-ProracunService-StrosekRepository-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e13-ProracunService-StrosekRepository">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="10" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e14-NasvetService-NasvetRepository" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.1333;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.2703;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="NasvetService" target="NasvetRepository">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14-NasvetService-NasvetRepository-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e14-NasvetService-NasvetRepository">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="10" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e15-NasvetService-UporabnikRepository" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.9333;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.0682;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="NasvetService" target="UporabnikRepository">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e15-NasvetService-UporabnikRepository-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e15-NasvetService-UporabnikRepository">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="10" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e16-NasvetService-StrosekRepository" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.0000;exitY=0.9160;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.7391;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="NasvetService" target="StrosekRepository">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1300" y="880" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e16-NasvetService-StrosekRepository-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e16-NasvetService-StrosekRepository">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="10" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e17-PrijavaService-OsebaRepository" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.8837;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.0857;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="PrijavaService" target="OsebaRepository">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e17-PrijavaService-OsebaRepository-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e17-PrijavaService-OsebaRepository">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="10" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e18-ProracunRepository-JpaRepository" value="" style="endArrow=block;endFill=0;endSize=16;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.5000;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5000;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="ProracunRepository" target="JpaRepository">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="640" y="1320" /><mxPoint x="1425" y="1320" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e18-ProracunRepository-JpaRepository-l0" value="«bind» T→Proracun" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e18-ProracunRepository-JpaRepository">
+          <mxGeometry x="-1" relative="1" as="geometry"><mxPoint x="75" y="18" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e19-StrosekRepository-JpaRepository" value="" style="endArrow=block;endFill=0;endSize=16;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.5000;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5000;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="StrosekRepository" target="JpaRepository">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1190" y="1320" /><mxPoint x="1425" y="1320" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e19-StrosekRepository-JpaRepository-l0" value="«bind» T→Strosek" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e19-StrosekRepository-JpaRepository">
+          <mxGeometry x="-1" relative="1" as="geometry"><mxPoint x="70" y="18" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e20-NasvetRepository-JpaRepository" value="" style="endArrow=block;endFill=0;endSize=16;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.5405;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5000;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="NasvetRepository" target="JpaRepository">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1700" y="1320" /><mxPoint x="1425" y="1320" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e20-NasvetRepository-JpaRepository-l0" value="«bind» T→Nasvet" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e20-NasvetRepository-JpaRepository">
+          <mxGeometry x="-1" relative="1" as="geometry"><mxPoint x="70" y="18" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e21-UporabnikRepository-JpaRepository" value="" style="endArrow=block;endFill=0;endSize=16;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.5000;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5000;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="UporabnikRepository" target="JpaRepository">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="2150" y="1320" /><mxPoint x="1425" y="1320" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e21-UporabnikRepository-JpaRepository-l0" value="«bind» T→Uporabnik" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e21-UporabnikRepository-JpaRepository">
+          <mxGeometry x="-1" relative="1" as="geometry"><mxPoint x="80" y="18" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e22-OsebaRepository-JpaRepository" value="" style="endArrow=block;endFill=0;endSize=16;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.5000;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5000;entryY=0.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="OsebaRepository" target="JpaRepository">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="2625" y="1320" /><mxPoint x="1425" y="1320" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e22-OsebaRepository-JpaRepository-l0" value="«bind» T→Oseba" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e22-OsebaRepository-JpaRepository">
+          <mxGeometry x="-1" relative="1" as="geometry"><mxPoint x="70" y="18" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e23-Oseba-Vloga" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;dashed=1;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=1.0000;exitY=0.1577;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.0000;entryY=0.5102;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Oseba" target="Vloga">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e24-Uporabnik-Oseba" value="" style="endArrow=block;endFill=0;endSize=16;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.8537;exitY=0.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5000;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Uporabnik" target="Oseba">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1250" y="1990" /><mxPoint x="1380" y="1990" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e25-FinancniSvetovalec-Oseba" value="" style="endArrow=block;endFill=0;endSize=16;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.3684;exitY=0.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5000;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="FinancniSvetovalec" target="Oseba">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1520" y="1990" /><mxPoint x="1380" y="1990" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e26-Uporabnik-Strosek" value="" style="startArrow=diamondThin;startFill=1;startSize=18;endArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.0000;exitY=0.3268;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5000;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Uporabnik" target="Strosek">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="625" y="2090" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e26-Uporabnik-Strosek-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e26-Uporabnik-Strosek">
+          <mxGeometry x="-1" relative="1" as="geometry"><mxPoint x="-14" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e26-Uporabnik-Strosek-l1" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e26-Uporabnik-Strosek">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="22" y="14" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e26-Uporabnik-Strosek-l2" value="stroski" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e26-Uporabnik-Strosek">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="-32" y="14" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e27-Uporabnik-Proracun" value="" style="startArrow=diamondThin;startFill=1;startSize=18;endArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.0000;exitY=0.7843;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5000;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Uporabnik" target="Proracun">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="190" y="2160" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e27-Uporabnik-Proracun-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e27-Uporabnik-Proracun">
+          <mxGeometry x="-1" relative="1" as="geometry"><mxPoint x="-14" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e27-Uporabnik-Proracun-l1" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e27-Uporabnik-Proracun">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="22" y="14" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e27-Uporabnik-Proracun-l2" value="proracuni" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e27-Uporabnik-Proracun">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="-38" y="14" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e28-Uporabnik-Nasvet" value="" style="startArrow=diamondThin;startFill=1;startSize=18;endArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.5000;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.7317;entryY=1.0000;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Uporabnik" target="Nasvet">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1105" y="2260" /><mxPoint x="2200" y="2260" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e28-Uporabnik-Nasvet-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e28-Uporabnik-Nasvet">
+          <mxGeometry x="-1" relative="1" as="geometry"><mxPoint x="10" y="14" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e28-Uporabnik-Nasvet-l1" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e28-Uporabnik-Nasvet">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="22" y="14" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e28-Uporabnik-Nasvet-l2" value="nasveti" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e28-Uporabnik-Nasvet">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="-32" y="14" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e29-FinancniSvetovalec-Uporabnik" value="" style="startArrow=diamondThin;startFill=0;startSize=18;endArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.0000;exitY=0.4762;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.0000;entryY=0.2614;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="FinancniSvetovalec" target="Uporabnik">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e29-FinancniSvetovalec-Uporabnik-l0" value="0..1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e29-FinancniSvetovalec-Uporabnik">
+          <mxGeometry x="-1" relative="1" as="geometry"><mxPoint x="-22" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e29-FinancniSvetovalec-Uporabnik-l1" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e29-FinancniSvetovalec-Uporabnik">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="20" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e29-FinancniSvetovalec-Uporabnik-l2" value="stranke" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e29-FinancniSvetovalec-Uporabnik">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="30" y="14" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e30-Nasvet-FinancniSvetovalec" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=0.2439;exitY=1.0000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.0000;entryY=0.4762;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Nasvet" target="FinancniSvetovalec">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="2000" y="2080" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e30-Nasvet-FinancniSvetovalec-l0" value="0..*" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e30-Nasvet-FinancniSvetovalec">
+          <mxGeometry x="-1" relative="1" as="geometry"><mxPoint x="24" y="14" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e30-Nasvet-FinancniSvetovalec-l1" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e30-Nasvet-FinancniSvetovalec">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="12" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e30-Nasvet-FinancniSvetovalec-l2" value="avtor" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e30-Nasvet-FinancniSvetovalec">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="30" y="12" as="offset" /></mxGeometry>
+        </mxCell>
+        <mxCell id="e31-Nasvet-Pomembnost" value="" style="endArrow=open;endFill=0;endSize=12;startArrow=none;html=1;rounded=0;fontFamily=Courier New;fontSize=11;exitX=1.0000;exitY=0.1437;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.0000;entryY=0.4425;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Nasvet" target="Pomembnost">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e31-Nasvet-Pomembnost-l0" value="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Courier New;fontSize=11;" vertex="1" connectable="0" parent="e31-Nasvet-Pomembnost">
+          <mxGeometry x="1" relative="1" as="geometry"><mxPoint x="-10" y="-12" as="offset" /></mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

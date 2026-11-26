@@ -150,10 +150,15 @@ moji-stroski/
 │   │   ├── main/
 │   │   │   ├── java/si/student/backend/
 │   │   │   │   ├── controller/
+│   │   │   │   │   ├── ProracunController.java
 │   │   │   │   │   └── StrosekController.java
 │   │   │   │   ├── repository/
+│   │   │   │   │   ├── ProracunRepository.java
 │   │   │   │   │   └── StrosekRepository.java
 │   │   │   │   ├── services/
+│   │   │   │   │   ├── Proracun.java
+│   │   │   │   │   ├── ProracunPregled.java
+│   │   │   │   │   ├── ProracunService.java
 │   │   │   │   │   └── Strosek.java
 │   │   │   │   └── BackendApplication.java
 │   │   │   └── resources/
@@ -167,7 +172,11 @@ moji-stroski/
 │   ├── mvnw.cmd
 │   └── pom.xml
 ├── DPU/
-│   └──DPU.png
+│   └── DPU.png
+├── docs/
+│   ├── user-stories.md
+│   ├── razredni_diagram.drawio
+│   └── razredni_diagram.png
 ├── frontend/
 │   ├── public/
 │   ├── src/
@@ -204,6 +213,7 @@ moji-stroski/
 | `frontend` | uporabniški vmesnik (React + Vite) |
 | `database` | konfiguracija podatkovne baze (Docker Compose) |
 | `postman` | zbirke in konfiguracije za testiranje API-ja |
+| `docs` | dokumentacija (uporabniške zgodbe, razredni diagram) |
 
 ## Zahteve za namestitev
 
@@ -408,10 +418,14 @@ const api = axios.create({
     baseURL: 'http://localhost:8080/api/stroski',
 })
 
+export const proracunApi = axios.create({
+    baseURL: 'http://localhost:8080/api/proracuni',
+})
+
 export default api
 ```
 
-**Opomba o CORS:** Backend sprejema zahteve samo z naslova `http://localhost:5173` (nastavljeno v `StrosekController` z `@CrossOrigin`). Če frontend teče na drugih vratih, jih je treba tam ustrezno popraviti.
+**Opomba o CORS:** Backend sprejema zahteve samo z naslova `http://localhost:5173` (nastavljeno v `StrosekController` in `ProracunController` z `@CrossOrigin`). Če frontend teče na drugih vratih, jih je treba tam ustrezno popraviti.
 
 **Pomembno:** Podatkovna baza, backend in frontend morajo biti hkrati zagnani, da aplikacija deluje v celoti.
 
@@ -468,6 +482,16 @@ http://localhost:8080/api/stroski
 | PUT | `/api/stroski/{id}` | Posodobi obstoječi strošek. Če ne obstaja, vrne 404. |
 | DELETE | `/api/stroski/{id}` | Izbriše strošek. Če ne obstaja, vrne 404. |
 | GET | `/api/stroski/analiza` | Izvede analizo stroškov za izbrano obdobje. |
+| GET | `/api/stroski/izvoz/pdf` | Vrne poročilo o stroških v obliki PDF (enaki parametri kot pri analizi). Če v obdobju ni stroškov, vrne 400. |
+
+Proračuni (osnovni naslov `http://localhost:8080/api/proracuni`):
+
+| HTTP metoda | Endpoint | Opis |
+|---|---|---|
+| GET | `/api/proracuni` | Pridobi vse proračune skupaj s porabo, odstotkom porabe in opozorilom. |
+| POST | `/api/proracuni` | Ustvari nov proračun. Ob neveljavnih podatkih ali prekrivanju obdobij vrne 400. |
+| PUT | `/api/proracuni/{id}` | Posodobi obstoječi proračun. Ob neveljavnih podatkih vrne 400. |
+| DELETE | `/api/proracuni/{id}` | Izbriše proračun. Če ne obstaja, vrne 404. |
 
 ### Primer JSON podatkov za dodajanje stroška
 
@@ -722,3 +746,65 @@ V tem dokumentu so podrobno opisani primeri uporabe, ki v trenutni različici ap
 
 
 ## Razredni diagram
+
+![Razredni diagram](docs/razredni_diagram.png)
+
+Izvorna datoteka diagrama (za urejanje v [draw.io](https://app.diagrams.net)): [`docs/razredni_diagram.drawio`](docs/razredni_diagram.drawio)
+
+Diagram prikazuje celotno načrtovano strukturo backenda: obstoječe funkcionalnosti (stroški, analiza, proračuni, izvoz PDF) in načrtovane funkcionalnosti (**prijava** z dvema vlogama in **nasveti finančnega svetovalca**, PU-08). Razredi so razporejeni po slojih: **kontrolerji** (REST API) → **servisi** (poslovna logika) → **repozitoriji** (dostop do baze) → **entitete** (podatki).
+
+Zaradi prijave so stroški in proračuni vezani na prijavljenega uporabnika: vsak uporabnik vidi samo svoje podatke, finančni svetovalec pa stroške svojih strank. Prijava deluje s sejo (`HttpSession`): `PrijavaController` ob uspešni prijavi v sejo shrani ID osebe, ostali kontrolerji pa prek `PrijavaService` iz seje ugotovijo, kdo je prijavljen in ali ima ustrezno vlogo.
+
+Iskanje stroškov po nazivu (PU-05) je izvedeno na frontendu (filtriranje seznama v `App.jsx`), zato v razrednem diagramu backenda nima svojih metod.
+
+### Uporabljene povezave
+
+| Povezava | Oznaka | Kje je uporabljena |
+|---|---|---|
+| Enosmerna asociacija | polna črta, odprta puščica | kontroler → servis/repozitorij, kontrolerji → `PrijavaService`, servis → repozitorij, `Nasvet` → `FinancniSvetovalec` (avtor), `Nasvet` → `Pomembnost` |
+| Odvisnost | črtkana črta, odprta puščica | `«create»`: `ProracunService` ustvari `ProracunPregled`, `PrijavaController` ustvari `PrijavljenaOseba`; `«use»`: `PrijavaController` sprejme `PrijavaZahteva`, `ProracunPregled` prebere `Proracun`; `Oseba` vrača `Vloga` |
+| Dedovanje (generalizacija) | polna črta, prazen trikotnik | `Uporabnik` in `FinancniSvetovalec` dedujeta od abstraktnega razreda `Oseba`; vsi repozitoriji razširjajo vmesnik `JpaRepository<T, ID>` |
+| Kompozicija | poln romb pri celoti | `Uporabnik` 1 ◆— 0..* `Strosek`, `Proracun`, `Nasvet` (ne obstajajo brez uporabnika in se izbrišejo skupaj z njim) |
+| Agregacija | prazen romb pri celoti | `FinancniSvetovalec` 0..1 ◇— 0..* `Uporabnik` (svetovalec ima stranke, ki obstajajo tudi brez njega) |
+
+### Opis razredov
+
+**Entitete (podatki)**
+
+- **`Oseba`** *(abstraktni razred)* – skupni podatki vseh računov: ime, priimek, e-pošta in geslo (shranjeno zakodirano). Abstraktna metoda `getVloga()` vrne vlogo, po kateri sistem loči navadnega uporabnika od svetovalca. Uporabnik in svetovalec sta shranjena v isti tabeli, zato prijava deluje enako za obe vlogi.
+- **`Uporabnik`** – oseba, ki beleži svoje stroške in proračune ter prejema nasvete. Hrani referenco na svojega finančnega svetovalca (ta je lahko `null`). `getVloga()` vrne `UPORABNIK`.
+- **`FinancniSvetovalec`** – oseba, ki pregleduje stroške svojih strank in jim piše nasvete. `getVloga()` vrne `SVETOVALEC`.
+- **`Vloga`** *(enum)* – `UPORABNIK` ali `SVETOVALEC`.
+- **`Strosek`** – en izdatek z opisom, zneskom, kategorijo in datumom, ki pripada enemu uporabniku.
+- **`Proracun`** – najvišji dovoljeni znesek porabe uporabnika za izbrano kategorijo v določenem obdobju (PU-06).
+- **`Nasvet`** – nasvet, ki ga svetovalec napiše uporabniku (PU-08). Hrani vsebino, pomembnost, čas nastanka, prejemnika (`uporabnik`) in avtorja (`svetovalec`).
+- **`Pomembnost`** *(enum)* – stopnje pomembnosti nasveta: `NIZKA`, `SREDNJA`, `VISOKA`.
+
+**Podatkovni objekti (DTO, ne shranjujejo se v bazo)**
+
+- **`ProracunPregled`** – za prikaz na frontendu združi podatke proračuna z izračunano porabo, odstotkom porabe in opozorilom.
+- **`PrijavaZahteva`** – e-pošta in geslo, ki ju frontend pošlje ob prijavi.
+- **`PrijavljenaOseba`** – podatki o prijavljeni osebi, ki jih backend vrne frontendu (brez gesla). Frontend po polju `vloga` odloči, ali prikaže pogled uporabnika ali svetovalca.
+
+**Repozitoriji (dostop do podatkovne baze)**
+
+- **`JpaRepository<T, ID>`** – vmesnik iz Spring Data JPA z osnovnimi operacijami (`save`, `findById`, `findAll`, `existsById`, `deleteById`). Vsi repozitoriji ga razširjajo, zato jim teh metod ni treba pisati.
+- **`StrosekRepository`** – vse poizvedbe so omejene na enega uporabnika (`uporabnikId`): seznam stroškov, stroški v obdobju (in kategoriji) za analizo in izvoz PDF ter `izracunajSkupnoPorabo()` (`@Query`) za izračun porabe proračuna.
+- **`ProracunRepository`** – `findByUporabnikId()` vrne proračune uporabnika, metodi `existsBy…` pa preverita, ali se proračun časovno prekriva z drugim proračunom istega uporabnika v isti kategoriji.
+- **`NasvetRepository`** – `findByUporabnikIdOrderByDatumUstvarjanjaDesc()` vrne nasvete uporabnika od najnovejšega naprej.
+- **`UporabnikRepository`** – `findByEmail()` poišče uporabnika, ki ga svetovalec doda med stranke, `findBySvetovalecId()` pa vrne vse stranke svetovalca.
+- **`OsebaRepository`** – `findByEmail()` poišče račun ob prijavi (ne glede na vlogo), `existsByEmail()` pa pri registraciji prepreči podvojeno e-pošto.
+
+**Servisi (poslovna logika)**
+
+- **`PrijavaService`** – logika prijave. `registracija()` s `preveriPodatkeRegistracije()` preveri vnos in prosto e-pošto, geslo zakodira s `PasswordEncoder` in shrani novega uporabnika. `prijava()` poišče osebo po e-pošti in preveri geslo. `pridobiPrijavljenoOsebo()`, `pridobiPrijavljenegaUporabnika()` in `pridobiPrijavljenegaSvetovalca()` iz seje vrnejo prijavljeno osebo ali vržejo napako, če nihče ni prijavljen oziroma ima napačno vlogo. Te metode uporabljajo vsi ostali kontrolerji.
+- **`ProracunService`** – logika proračunov za prijavljenega uporabnika. `ustvariProracun()` in `urediProracun()` s `preveriPodatke()` in `preveriPrekrivanje()` preverita vnos, `pridobiLastniProracun()` pa zagotovi, da uporabnik ureja ali briše samo svoj proračun. `izracunajPorabo()`, `izracunajOdstotekPorabe()` in `pridobiOpozorilo()` primerjajo stroške s proračunom, `pridobiPregledProracunov()` pa iz tega sestavi seznam `ProracunPregled`.
+- **`NasvetService`** – logika nasvetov (PU-08), narejena po enakem principu kot `ProracunService` (ob napaki vrže `IllegalArgumentException`, ki jo kontroler pretvori v HTTP odgovor). `pridobiStranko()` preveri, da je uporabnik res stranka svetovalca, `dodajStranko()` doda uporabnika med stranke po e-pošti, `pridobiStroskeStranke()` vrne stroške stranke za pregled, `ustvariNasvet()` s `preveriPodatke()` zavrne prazen nasvet ali manjkajočo pomembnost ter nasvet shrani, `pridobiNasveteUporabnika()` pa vrne nasvete za prikaz na uporabnikovi strani.
+
+**Kontrolerji (REST API)**
+
+- **`PrijavaController`** (`/api/prijava`) – registracija, prijava (v sejo shrani ID osebe), odjava (seja se razveljavi) in `trenutnaOseba()`, s katero frontend ob osvežitvi strani preveri, ali je uporabnik še prijavljen.
+- **`StrosekController`** (`/api/stroski`) – dodajanje, pregled, urejanje in brisanje stroškov prijavljenega uporabnika, `analizaStroskov()` in `izvoziPdf()` (PU-07). `pridobiLastniStrosek()` prepreči dostop do tujih stroškov.
+- **`ProracunController`** (`/api/proracuni`) – upravljanje proračunov prijavljenega uporabnika. Klice posreduje razredu `ProracunService`.
+- **`NasvetController`** (`/api/nasveti`) – za svetovalca: seznam strank, dodajanje stranke, pregled stroškov stranke, dodajanje in brisanje nasveta; za uporabnika: `mojiNasveti()`. Prijavljeno osebo in njeno vlogo dobi prek `PrijavaService`.
+- **`BackendApplication`** – vstopna točka aplikacije. Metoda `main()` zažene Spring Boot, ki samodejno ustvari in poveže vse kontrolerje, servise in repozitorije.
